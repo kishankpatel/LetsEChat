@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ChatApp</title>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+    <%= action_cable_meta_tag %>
+  </head>
+  <body>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="/">Let's Chat</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li class="active"><a href="/">Home</a></li>
+	    </ul>
+	    <ul class="nav navbar-nav navbar-right">
+	      <% if user_signed_in? %>
+	      	<li class="active"><a href="javascript:void(0)">You are logged in as: <%= current_user.email %></a></li>
+			<li>
+			  <%= link_to(destroy_user_session_path, method: :delete) do %>
+			  <span class="glyphicon glyphicon-log-in"></span>
+			  LogOut
+			  <%end%>        
+			</li>
+		  <% else %>
+			<li>
+			  <%= link_to(new_user_session_path) do  %>
+				<span class="glyphicon glyphicon-log-in"></span>
+				Login
+			  <%end%>        
+			</li>
+		  <% end %>
+	    </ul>
+	  </div>
+	</nav>
+    <div class="container custom_container">
+      <%= yield %>
+    </div>
+  </body>
+</html>

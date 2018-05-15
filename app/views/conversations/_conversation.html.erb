@@ -1,0 +1,90 @@
+<style type="text/css">
+  .text_area{resize:none;padding-right: 40px}
+  .send {cursor: pointer;height: 20px;position: absolute;right: 12px;top: 7px;opacity: 0.5;font-size: 22px;}
+  .send:hover { opacity: 0.9; }
+  .send_msg_btn{display: none;}
+  .send_message_container{position: relative;margin-top: 10px;}
+
+</style>
+<li>
+  <div class="panel panel-default" data-conversation-id="<%= conversation.id %>" id = conversation_<%=conversation.id%>>
+    <div class="panel-heading">
+      <%= link_to conversation.opposed_user(user).email, '', class: 'toggle-window' %>
+      <%= link_to "x", close_conversation_path(conversation), class: "btn btn-default btn-xs pull-right", remote: true, method: :post %>
+    </div>
+
+    <div class="panel-body" style="display: none;">
+      <div class="messages-list">
+        <ul>
+          <%= render 'conversations/conversation_content', messages: conversation.messages.order("created_at"), user: user %>
+        </ul>
+      </div>
+      <%= form_for [conversation, conversation.messages.new], remote: true do |f| %>
+        <%= hidden_field_tag :recipient_id, conversation.opposed_user(user).id, :class => "recipient_id", id:"" %>
+        <%= hidden_field_tag :conversation_id, conversation.id, :class => "conversation_id", id:""  %>
+        <div class="send_message_container">
+          <%= f.hidden_field :user_id, value: user.id %>
+          <%= f.text_area :body, class: "form-control text_area" %>
+          <span class="glyphicon glyphicon-send send" onclick="submitForm(this)"></span>
+          <%= f.submit "Send", class: "send_msg_btn" %>
+        </div>
+
+      <% end %>
+    </div>
+  </div>
+</li>
+<script type="text/javascript">
+  var text_area;
+  var sender_id = "";
+  App.room = App.cable.subscriptions.create("RoomChannel", {
+    connected: function() {},
+    disconnected: function() {},
+    received: function(data) {
+      if(data['sender_id'] != "<%=current_user.id%>"){
+        $("#conversation_"+data['conversation_id']).find('.messages-list ul').append("<li><div class='message-received'>" + data['message'] + "</div><div class='clearfix'></div></li>");
+        var messages_list = $("#conversation_"+data['conversation_id']).find('.messages-list');
+        var height = messages_list[0].scrollHeight;
+        messages_list.scrollTop(height);
+        return;
+      }
+    },
+    speak: function(message, conversation_id, recipient_id, sender_id) {
+      return this.perform('speak', {
+        message: message,
+        conversation_id: conversation_id,
+        recipient_id: recipient_id, 
+        sender_id: sender_id
+      });
+    }
+  });
+
+
+  function submitForm(obj) {
+    text_area = $(obj).closest("form").find(".text_area");
+    var msg = text_area.val().trim();
+    var recipient_id = $(obj).closest("form").find(".recipient_id").val();
+    var conversation_id = $(obj).closest("form").find(".conversation_id").val();
+    var sender_id = "<%=current_user.id%>";
+    if( msg.length != 0){
+      $(obj).closest("form").submit();
+      sender_id = "<%=current_user.id%>";
+      App.room.speak(msg, conversation_id, recipient_id, sender_id );
+    }else{
+      text_area.focus();
+    }
+  }
+
+
+  // $(".send").on('click', function(event) {
+  //   text_area = $(this).closest("form").find(".text_area");
+  //   var msg = text_area.val().trim();
+  //   var recipient_id = $(this).closest("form").find(".recipient_id").val();
+  //   var conversation_id = $(this).closest("form").find(".conversation_id").val();
+  //   var sender_id = "<%=current_user.id%>";
+  //   if( msg.length != 0){
+  //     $(this).closest("form").submit();
+  //     sender_id = "<%=current_user.id%>";
+  //     App.room.speak(msg, conversation_id, recipient_id, sender_id );
+  //   }
+  // });
+</script>
