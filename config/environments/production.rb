@@ -38,7 +38,7 @@ Rails.application.configure do
   # config.action_cable.mount_path = nil
   # config.action_cable.url = 'wss://example.com/cable'
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
-  config.middleware.use ChatActionCable  
+  # config.middleware.use ChatActionCable  
   config.web_socket_server_url = "https://letsechat.herokuapp.com/"
   # config.action_cable.allowed_request_origins = [ 'https://letsechat.herokuapp.com/', 'http://letsechat.herokuapp.com/']
 
