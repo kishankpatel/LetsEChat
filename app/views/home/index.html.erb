@@ -1,12 +1,4 @@
 <div class="row">
-  <div class="col-md-9">
-    <ul id="conversations-list">
-      <% @conversations.each do |conversation| %>
-        <%= render 'conversations/conversation', conversation: conversation, user: current_user %>
-      <% end %>
-    </ul>
-  </div>
-
   <div class="col-md-3">
     <div class="panel panel-primary">
       <div class="panel-heading">
@@ -21,4 +13,12 @@
       </div>
     </div>
   </div>
+  <div class="col-md-9">
+    <ul id="conversations-list">
+      <% @conversations.each do |conversation| %>
+        <%= render 'conversations/conversation', conversation: conversation, user: current_user %>
+      <% end %>
+    </ul>
+  </div>
+  <div class="clearfix"></div>
 </div>
