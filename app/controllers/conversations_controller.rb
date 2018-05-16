@@ -4,9 +4,9 @@ class ConversationsController < ApplicationController
     
     add_to_conversations unless conversated?
 
-    respond_to do |format|
-      format.js
-    end
+    # respond_to do |format|
+    #   format.js
+    # end
   end
 
   def close
