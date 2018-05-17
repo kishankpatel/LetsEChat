@@ -9,7 +9,8 @@ class RoomChannel < ApplicationCable::Channel
 
   def speak data
   	p "in speak method"
-  	ActionCable.server.broadcast "room_channel", message: data['message'], conversation_id: data['conversation_id'], recipient_id: data['recipient_id'], sender_id: data['sender_id']
+  	recipient_user_email = User.find(data['sender_id']).email
+    ActionCable.server.broadcast "room_channel", message: data['message'], conversation_id: data['conversation_id'], recipient_id: data['recipient_id'], sender_id: data['sender_id'], email: recipient_user_email
   	p data
   end
 end

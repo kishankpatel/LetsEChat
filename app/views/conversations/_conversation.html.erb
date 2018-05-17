@@ -1,9 +1,9 @@
 <style type="text/css">
-  .text_area{resize:none;padding-right: 40px}
-  .send {cursor: pointer;height: 20px;position: absolute;right: 12px;top: 7px;opacity: 0.5;font-size: 22px;}
-  .send:hover { opacity: 0.9; }
+  .text_area{resize:none;border-radius: 30px;padding: 0 10px;height: 60px !important;}
+  .send {cursor: pointer;position: absolute;right: 12px;top: 7px;opacity: 0.5;font-size: 22px;border: 1px solid #050505;display: inline-block;padding: 11px;border-radius: 50%;}
+  .send:hover { opacity: 0.9;background: #eee; }
   .send_msg_btn{display: none;}
-  .send_message_container{position: relative;margin-top: 10px;}
+  .send_message_container{position: relative;margin-top: 10px;padding-right: 70px;}
 
 </style>
 <li>
@@ -25,7 +25,7 @@
         <div class="send_message_container">
           <%= f.hidden_field :user_id, value: user.id %>
           <%= f.text_area :body, class: "form-control text_area" %>
-          <span class="glyphicon glyphicon-send send" onclick="submitForm(this)"></span>
+          <span class="glyphicon glyphicon-arrow-right send" onclick="submitForm(this)"></span>
           <%= f.submit "Send", class: "send_msg_btn" %>
         </div>
 
@@ -40,7 +40,19 @@
     connected: function() {},
     disconnected: function() {},
     received: function(data) {
-      if(data['sender_id'] != "<%=current_user.id%>"){
+      if(data['recipient_id'] == "<%=current_user.id%>"){
+        
+        if (("Notification" in window)) {
+          if (Notification.permission === "granted") {
+            var options = {
+              body: data['message'],
+              icon: "/assets/profile_icon.png",
+              dir : "ltr"
+            };
+            var notification = new Notification("New message from: "+data['email'],options);
+          }
+        }
+
         $("#conversation_"+data['conversation_id']).find('.messages-list ul').append("<li><div class='message-received'>" + data['message'] + "</div><div class='clearfix'></div></li>");
         var messages_list = $("#conversation_"+data['conversation_id']).find('.messages-list');
         var height = messages_list[0].scrollHeight;
