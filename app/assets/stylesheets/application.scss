@@ -11,7 +11,9 @@ ul {
   padding-left: 0px;
   list-style: none;
 }
-
+.fl{float: left;}
+.fr{float: right;}
+.cb{clear:both;}
 .messages-list {
   max-height: 400px;
   overflow-y: auto;
@@ -60,9 +62,6 @@ ul {
     position: absolute;
     left: -10px;
     top: -1px;
-}
-.custom_container{
-	margin-top:70px;
 }
 
 .login-form {
@@ -127,3 +126,38 @@ ul {
   margin: 0 20px;
   margin-top: 10px;
 }
+
+.user_profile {
+    float: left;
+    height: 30px;
+    width: 30px;
+    border: 1px solid #53a855;
+    text-align: center;
+    border-radius: 50%;
+    display: inline-block;
+    padding-top: 4px;
+    background-color: #53a855;
+    font-size: 17px;
+    font-weight: bold;
+    color: #fff;
+}
+.user_list{display:none;max-height: 400px;overflow-y: auto;}
+.user_list a{margin-top:10px;display: inline-block;}
+.user_name {
+    float: left;
+    margin-top: 4px;
+    margin-left: 5px;
+}
+
+.alert {
+    position: fixed;
+    top: 60px;
+    right: 30px;
+}
+.alert button.close {
+    margin-left: 10px;
+    position: relative;
+    top: -15px;
+    right: -10px;
+}
+.alert button.close:hover{color:red;opacity: 1;}

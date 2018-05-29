@@ -1,0 +1,16 @@
+<% group_messages.each do |message| %>
+  <li>
+	<%if current_user.id != message.user_id%>    
+		<%user = User.find(message.user_id)%>
+	    <a href=<%conversations_path(user_id: encode_id(user.id))%>>
+		    <div class="user_profile" title=<%=user.email%>>
+		    	<%=user.email[0].upcase%>
+		    </div>
+	    </a>
+	<%end%>
+    <div class="<%= current_user.id == message.user_id ? 'message-sent' : 'message-received' %>">
+      <%= message.body %>
+    </div>
+    <div class="clearfix"></div>
+  </li>
+<% end %>

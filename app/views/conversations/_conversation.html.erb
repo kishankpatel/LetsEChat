@@ -1,5 +1,5 @@
 <style type="text/css">
-  .text_area{resize:none;border-radius: 30px;padding: 0 10px;height: 60px !important;}
+  .text_area{resize:none;border-radius: 30px;padding: 5px 20px;height: 60px !important;}
   .send {cursor: pointer;position: absolute;right: 12px;top: 7px;opacity: 0.5;font-size: 22px;border: 1px solid #050505;display: inline-block;padding: 11px;border-radius: 50%;}
   .send:hover { opacity: 0.9;background: #eee; }
   .send_msg_btn{display: none;}
@@ -10,7 +10,7 @@
   <div class="panel panel-default" data-conversation-id="<%= conversation.id %>" id = conversation_<%=conversation.id%>>
     <div class="panel-heading">
       <%= link_to conversation.opposed_user(user).email, '', class: 'toggle-window' %>
-      <%= link_to "x", close_conversation_path(conversation), class: "btn btn-default btn-xs pull-right", remote: true, method: :post %>
+      <%#= link_to "x", close_conversation_path(conversation), class: "btn btn-default btn-xs pull-right", remote: true, method: :post %>
     </div>
 
     <div class="panel-body">
@@ -34,6 +34,9 @@
   </div>
 </li>
 <script type="text/javascript">
+  var messages_list = $('.messages-list');
+  var height = messages_list[0].scrollHeight;
+  messages_list.scrollTop(height);
   var text_area;
   var sender_id = "";
   App.room = App.cable.subscriptions.create("RoomChannel", {
@@ -41,8 +44,7 @@
     disconnected: function() {},
     received: function(data) {
       if(data['recipient_id'] == "<%=current_user.id%>"){
-        
-        if (("Notification" in window)) {
+        if ("Notification" in window) {
           if (Notification.permission === "granted") {
             var options = {
               body: data['message'],

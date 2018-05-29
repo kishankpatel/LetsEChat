@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
   def index
+    @groups = current_user.groups                                 
     session[:conversations] ||= []
  
     @users = User.all.where.not(id: current_user)

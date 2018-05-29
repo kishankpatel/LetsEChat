@@ -1,3 +1,4 @@
+<a href="/groups/new">Create Group</a>
 <div class="row">
   <div class="col-md-3">
     <div class="panel panel-primary">
@@ -7,18 +8,25 @@
       <div class="panel-body">
         <ul>
           <% @users.each do |user| %>
-            <li><%= link_to user.email, conversations_path(user_id: user) %></li>
+            <li><%= link_to user.email, conversations_path(user_id: encode_id(user.id)) %></li>
           <% end %>
         </ul>
       </div>
     </div>
+    <% if @groups.present? %>  
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Groups</h3>
+        </div>
+        <div class="panel-body">
+          <ul>
+            <% @groups.each do |group| %>
+              <li><%= link_to group.name, "groups/#{group.id}" %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <%end%>
   </div>
-  <!-- <div class="col-md-9">
-    <ul id="conversations-list">
-      <%# @conversations.each do |conversation| %>
-        <%#= render 'conversations/conversation', conversation: conversation, user: current_user %>
-      <%# end %>
-    </ul>
-  </div> -->
   <div class="clearfix"></div>
 </div>

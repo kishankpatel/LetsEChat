@@ -25,6 +25,8 @@ Reference links:
 
 Current app-
 https://www.nopio.com/blog/rails-real-time-chat-application-part-1/
+Github url for the app-
+https://github.com/nopio/facebook-chat-part1
 
 Action-cable
 https://www.pluralsight.com/guides/creating-a-chat-using-rails-action-cable?gclid=Cj0KCQjwuMrXBRC_ARIsALWZrIihUkfpexhZdXcy8MuMoHvm3jQ3dipceLzO_Ug2mpKCdIOK5aPNjJkaAhgPEALw_wcB&aid=7010a000002BWq6AAG&promo=&oid=&utm_source=non_branded&utm_medium=digital_paid_search_google&utm_campaign=APAC_Dynamic&utm_content=&s_kwcid=AL!5668!3!247592797107!b!!g!!&ef_id=WjiqcgAAAOnVHvsn:20180509104859:s

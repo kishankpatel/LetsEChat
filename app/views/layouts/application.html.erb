@@ -15,6 +15,7 @@
   <!-- <script src=""></script> -->
   </head>
   <body>
+    <div class="notify_btn_sec"></div>
   <nav class="navbar navbar-inverse ">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -55,13 +56,46 @@
       </ul>
     </div>
   </nav>
-    <div class="container custom_container">
+    <div class="container">
+      <%= bootstrap_flash %>
       <%= yield %>
     </div>
   </body>
   <script type="text/javascript">
-      var messages_list = $('.messages-list');
-      var height = messages_list[0].scrollHeight;
-      messages_list.scrollTop(height);
+    $(".alert").fadeOut(5000);
+    // if(!(Notification.permission === "granted")){
+    //   $(".notify_btn_sec").html("<button onclick='notifyMe()' class='notify_btn'>Notify me!</button>");
+    // }
+    function notifyMe() {
+      if (!("Notification" in window)) {
+        alert("This browser does not support desktop notification");
+      }
+      else if (Notification.permission === "granted") {
+            var options = {
+                    body: "Now you will get the notification from Let's E-Chart",
+                    icon: "/assets/logo.png",
+                    dir : "ltr"
+                 };
+              var notification = new Notification("Hi there",options);
+              $(".notify_btn").hide();
+      }
+      else if (Notification.permission !== 'denied') {
+        Notification.requestPermission(function (permission) {
+          if (!('permission' in Notification)) {
+            Notification.permission = permission;
+          }
+        
+          if (permission === "granted") {
+            var options = {
+                  body: "Now you will get the notification from Let's E-Chart",
+                  icon: "/assets/logo.png",
+                  dir : "ltr"
+              };
+            var notification = new Notification("Hi there",options);
+            $(".notify_btn").hide();
+          }
+        });
+      }
+    }
   </script>
 </html>

@@ -1,0 +1,24 @@
+<h2>Create Group</h2>
+<div  class="login-form">
+  <%= form_for(@group, url: "/groups/create", html: { method: :post }) do |f| %>
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <%= f.text_field :name, required: true, class: "form-control", :placeholder => "Group Name" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="input-group">
+        <%= f.text_area :description, :placeholder => "Describr your group", class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.submit "Create Group", :class => "btn btn-primary login-btn btn-block" %>
+    </div>
+  <% end %>
+</div>
+
+
+<%= link_to "Back", :back %>
+
