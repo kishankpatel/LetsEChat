@@ -48,7 +48,7 @@
           if (Notification.permission === "granted") {
             var options = {
               body: data['message'],
-              icon: "/profile_icon.png",
+              icon: "/assets/profile_icon.png",
               dir : "ltr"
             };
             var notification = new Notification("New message from: "+data['email'],options);
