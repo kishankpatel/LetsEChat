@@ -6,9 +6,30 @@
   .send_message_container{position: relative;margin-top: 10px;padding-right: 70px;}
 
 </style>
-<div class="panel panel-default" data-conversation-id="<%= @group.id %>" id = group_<%=@group.id%>>
+<div class="panel panel-default group_container" data-conversation-id="<%= @group.id %>" id = group_<%=@group.id%>>
   <div class="panel-heading">
-    <%= link_to @group.name, 'javascript:void(0)', :class => "group_info" %>
+    <div class="fl">
+      <%= link_to "javascript:void(0)", :class => "group_info" do %>
+        <img src=<%= @group.images.present? && @group.images.last.image.url.present? ? @group.images.order("id").last.image.url(:thumb) : "/assets/group_icon.png"%> class='pf_img1' >
+        <span><%=@group.name%></span>
+      <%end%>
+    </div>  
+    <div class="fr">
+      <div class="dropdown">
+        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+          <img src="/assets/more_icon.png" alt=":" class="more_icon">
+        </a>
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li>
+            <%= link_to "javascript:void(0)", :class => "edit_group", "data-id" => @group.id do %>
+              <span class="glyphicon glyphicon-pencil"></span>
+              Edit
+            <%end%> 
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="cb"></div>
     <div class="show_group_info">
       <div class="user_list">
         <a href="javascript:void(0)" class="add_user" data-toggle="modal" data-target="#userList">+ Add User</a>
@@ -46,7 +67,6 @@
   </div>
 </div>
 
-
 <div class="modal fade" id="userList" role="dialog">
   <div class="modal-dialog">
     <!-- Modal content-->
@@ -72,8 +92,24 @@
     </div>
     
   </div>
+</div> 
+<div class="modal fade" id="editGroup" role="dialog">
+
 </div>    
 <script type="text/javascript">
+  $(".edit_group").click(function(){
+    var id = $(this).data("id");
+    $.ajax({
+      type: "GET",
+      url: "/groups/edit/"+id,
+      success: function(data) {
+        $("#editGroup").html(data).modal("show");
+      },
+      error: function(data){
+        alert("Got an error while on delete method.!!!");
+      }
+    });
+  })
   var options = {
     url: "/my_contacts",
     getValue: "email",

@@ -37,3 +37,5 @@ https://medium.com/@JeremyVe/rails-5-actioncable-and-heroku-b10880dafb58
 Desktop notification
 https://codeforgeek.com/2014/10/desktop-notification-like-facebook-using-html5/
 * ...
+paperclip link
+http://rubythursday.com/episodes/ruby-snack-27-upgrade-paperclip-and-aws-sdk-in-prep-for-rails-5

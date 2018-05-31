@@ -23,4 +23,6 @@ Rails.application.routes.draw do
   post "/group_messages/create" => "group_message#create", :as => :group_messages
   post "/user_groups/create" => "user_groups#create"
   get "/my_contacts" => "user_groups#my_contacts"
+  get "/groups/edit/:id" => "groups#edit"
+  patch "/groups/update/:id" => "groups#update"
 end

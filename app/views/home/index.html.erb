@@ -21,7 +21,12 @@
         <div class="panel-body">
           <ul>
             <% @groups.each do |group| %>
-              <li><%= link_to group.name, "groups/#{group.id}" %></li>
+              <li>
+                <%= link_to "/groups/#{group.id}" do %>
+                  <img src=<%= group.images.present? && group.images.last.image.url.present? ? group.images.order("id").last.image.url(:thumb) : "/assets/group_icon.png"%> class='pf_img1' >
+                  <span><%=group.name%></span>
+                <%end%>
+              </li>
             <% end %>
           </ul>
         </div>

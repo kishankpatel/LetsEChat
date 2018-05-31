@@ -12,7 +12,9 @@
         <%= f.text_area :description, :placeholder => "Describr your group", class: "form-control" %>
       </div>
     </div>
-
+    <%= f.fields_for :images, @group.images, :html => { :multipart => true } do |image| %>
+      <%= image.file_field :image %>
+     <% end %>
     <div class="form-group">
       <%= f.submit "Create Group", :class => "btn btn-primary login-btn btn-block" %>
     </div>
