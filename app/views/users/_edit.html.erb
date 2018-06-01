@@ -24,9 +24,9 @@
           </div>
           <div class="form-group">
             <%= f.fields_for :images, @user.images, :html => { :multipart => true } do |image| %>
-              <%= image.file_field :image,:class => "hid_att", :style => "display:none;" %>
+              <%= image.file_field :image,:class => "hid_user_att", :style => "display:none;" %>
              <% end %>
-             <img src="/assets/attachment_icon.png" class="attach_file">
+             <img src="/assets/attachment_icon.png" class="attach_user_file">
              <span>Update profile image</span>
              <div class="file_name"></div>
           </div>
@@ -40,8 +40,8 @@
 </div>
 
 <script type="text/javascript">
-  $(".attach_file").click(function(){
-    $(".hid_att").click();
+  $(".attach_user_file").click(function(){
+    $(".hid_user_att").click();
   })
   $('input[type="file"]').change(function(e){
       var fileName = e.target.files[0].name;

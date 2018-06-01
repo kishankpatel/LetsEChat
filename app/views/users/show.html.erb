@@ -35,7 +35,7 @@
                   <div class="box-body">
                      <div class="col-sm-6">
                         <div  align="center">
-                           <img src=<%= @user.images.present? && @user.images.last.image.url.present? ? @user.images.order("id").last.image.url(:thumb) : "/assets/group_icon.png"%> class='pf_img1 group_img img-circle img-responsive' data-id = <%=@user.id%> id="profile-image1">
+                           <img src=<%= @user.images.present? && @user.images.last.image.url.present? ? @user.images.order("id").last.image.url(:thumb) : "/assets/group_icon.png"%> class='pf_img1 user_img img-circle img-responsive' data-id = <%=@user.id%> id="profile-image1">
                            
                            <input id="profile-image-upload" class="hidden" type="file">
                            <!-- <div style="color:#999;" >click here to change profile image</div> -->
@@ -80,6 +80,7 @@
          </div>
       </div>
       <div class="modal fade" id="editUser" role="dialog"></div> 
+      <div class="modal fade" id="displayUserImage" role="dialog"></div>  
       <script>
          // $(function() {
          // $('#profile-image1').on('click', function() {
@@ -99,6 +100,19 @@
             }
           });
         })      
+        $(".user_img").click(function(){
+          var id = $(this).data("id");
+          $.ajax({
+            type: "GET",
+            url: "/users/image/"+id,
+            success: function(data) {
+              $("#displayUserImage").html(data).modal("show");
+            },
+            error: function(data){
+              alert("Got an error while fetching group image.!!!");
+            }
+          });
+        })
       </script> 
    </div>
 </div>

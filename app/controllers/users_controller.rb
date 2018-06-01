@@ -18,6 +18,11 @@ class UsersController < ApplicationController
 	    redirect_to request.referrer
 	end
 
+	def image
+		@user = User.find params[:id]
+    	render :partial => "show_image"
+	end
+
 	private
 	def user_params
     params.require(:user).permit(:first_name, :last_name, :image => [:image, :imageable])

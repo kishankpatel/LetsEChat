@@ -29,4 +29,5 @@ Rails.application.routes.draw do
   get "/users/profile" => "users#show"
   get "/users/edit/:id" => "users#edit"
   patch "/users/update/:id" => "users#update"
+  get "/users/image/:id" => "users#image"
 end
