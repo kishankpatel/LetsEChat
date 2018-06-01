@@ -7,7 +7,7 @@ class GroupsController < ApplicationController
   	params[:group][:created_by] = current_user.id
   	group = Group.create(group_params)
   	@user_group = UserGroup.create(:user_id => current_user.id, :group_id => group.id, :added_by => current_user.id, :is_admin => 1)
-    image = Image.create(image: params[:group][:images][:image], :imageable => group)
+    image = Image.create(image: params[:group][:images][:image], :imageable => group) if params[:group][:images].present?
   	
     redirect_to root_path
   end
@@ -18,7 +18,8 @@ class GroupsController < ApplicationController
   		redirect_to root_path
   	end
   	@group_message = GroupMessage.new
-  	@group_messages = @group.group_messages
+    user_group = @group.users.where("user_id =?", current_user.id).first
+  	@group_messages = @group.group_messages.where("created_at >= '#{user_group.created_at}'")
   end
   def edit
     @group = Group.find_by_id params[:id]
@@ -31,6 +32,11 @@ class GroupsController < ApplicationController
     image = Image.create(image: params[:group][:images][:image], :imageable => group) if params[:group][:images].present?
     flash[:notice] = "Group has been updated."
     redirect_to request.referrer
+  end
+
+  def image
+    @group = Group.find params[:id]
+    render :partial => "show_image"
   end
 
   private

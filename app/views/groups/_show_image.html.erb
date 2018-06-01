@@ -1,0 +1,9 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-body">
+      <div>
+        <img src=<%= @group.images.present? && @group.images.last.image.url.present? ? @group.images.order("id").last.image.url : "/assets/group_icon.png"%> class='modal_group_img' >
+      </div>
+    </div>
+  </div>
+</div>

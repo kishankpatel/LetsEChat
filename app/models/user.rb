@@ -8,4 +8,6 @@ class User < ApplicationRecord
   has_many :conversations, foreign_key: :sender_id
   has_many :user_groups, dependent: :destroy
   has_many :groups, through: :user_groups
+  has_many :images, as: :imageable, dependent: :destroy
+  
 end

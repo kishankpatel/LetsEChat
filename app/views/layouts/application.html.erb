@@ -36,6 +36,12 @@
               <ul class="dropdown-menu">
                 <li><a href="javascript:void(0)"><%= current_user.email %></a></li>
                 <li class="divider"></li>
+                <li><a href="/users/profile">My Profile</a></li>
+                <li class="divider"></li>
+                <li>
+                  <a href="javascript:void(0)" class="add_group" data-toggle="modal" data-target="#newGroup">+ Create Group</a>
+                </li>
+                <li class="divider"></li>
                 <li><%= link_to(destroy_user_session_path, method: :delete) do %>
                   <span class="glyphicon glyphicon-log-in"></span>
                   LogOut
@@ -59,7 +65,11 @@
       <%= bootstrap_flash %>
       <%= yield %>
     </div>
+    <div class="modal fade" id="displayGroupImage" role="dialog"></div>  
   </body>
+  <%if user_signed_in? %>
+    <%= render partial:"/groups/new"%>
+  <%end%>
   <script type="text/javascript">
     $(".alert").fadeOut(10000);
     // if(!(Notification.permission === "granted")){
@@ -96,5 +106,19 @@
         });
       }
     }
+
+  $(".group_img").click(function(){
+    var id = $(this).data("id");
+    $.ajax({
+      type: "GET",
+      url: "/groups/image/"+id,
+      success: function(data) {
+        $("#displayGroupImage").html(data).modal("show");
+      },
+      error: function(data){
+        alert("Got an error while fetching group image.!!!");
+      }
+    });
+  })
   </script>
 </html>

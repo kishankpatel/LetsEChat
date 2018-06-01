@@ -1,5 +1,5 @@
 <style type="text/css">
-  .text_area{resize:none;border-radius: 30px;padding: 5px 20px;height: 60px !important;}
+  .text_area{resize:none;border-radius: 30px;padding: 5px 20px;outline:none;width: 100%;border: 1px solid #aaa;}
   .send {cursor: pointer;position: absolute;right: 12px;top: 7px;opacity: 0.5;font-size: 22px;border: 1px solid #050505;display: inline-block;padding: 11px;border-radius: 50%;}
   .send:hover { opacity: 0.9;background: #eee; }
   .send_msg_btn{display: none;}
@@ -9,8 +9,8 @@
 <div class="panel panel-default group_container" data-conversation-id="<%= @group.id %>" id = group_<%=@group.id%>>
   <div class="panel-heading">
     <div class="fl">
+      <img src=<%= @group.images.present? && @group.images.last.image.url.present? ? @group.images.order("id").last.image.url(:thumb) : "/assets/group_icon.png"%> class='pf_img1 group_img' data-id = <%=@group.id%>  >
       <%= link_to "javascript:void(0)", :class => "group_info" do %>
-        <img src=<%= @group.images.present? && @group.images.last.image.url.present? ? @group.images.order("id").last.image.url(:thumb) : "/assets/group_icon.png"%> class='pf_img1' >
         <span><%=@group.name%></span>
       <%end%>
     </div>  
@@ -32,7 +32,10 @@
     <div class="cb"></div>
     <div class="show_group_info">
       <div class="user_list">
-        <a href="javascript:void(0)" class="add_user" data-toggle="modal" data-target="#userList">+ Add User</a>
+        <%if @group.user_groups.where(:user_id => current_user.id).first.is_admin%>
+          <a href="javascript:void(0)" class="add_user" data-toggle="modal" data-target="#userList">+ Add User</a>
+        <%end%>
+        <hr>
         <%@group.users.each do |user|%>
           <div>
             <a href=<%conversations_path(user_id: encode_id(user.id))%>>
@@ -59,7 +62,7 @@
     <%= form_for @group.group_messages.new, remote: true do |f| %>
       <%= hidden_field_tag "group_message[group_id]", @group.id, id:"group_id" %>
       <div class="send_message_container">
-        <%= f.text_area :body, class: "form-control text_area" %>
+        <%= f.text_area :body, class: "text_area" %>
         <span class="glyphicon glyphicon-arrow-right send" onclick="submitForm(this)"></span>
         <%= f.submit "Send", class: "send_msg_btn" %>
       </div>
@@ -95,7 +98,8 @@
 </div> 
 <div class="modal fade" id="editGroup" role="dialog">
 
-</div>    
+</div>   
+  
 <script type="text/javascript">
   $(".edit_group").click(function(){
     var id = $(this).data("id");
@@ -106,7 +110,7 @@
         $("#editGroup").html(data).modal("show");
       },
       error: function(data){
-        alert("Got an error while on delete method.!!!");
+        alert("Got an error on edit method.!!!");
       }
     });
   })
@@ -203,4 +207,5 @@
       text_area.focus();
     }
   }
+
 </script>

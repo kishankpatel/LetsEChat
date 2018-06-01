@@ -25,4 +25,8 @@ Rails.application.routes.draw do
   get "/my_contacts" => "user_groups#my_contacts"
   get "/groups/edit/:id" => "groups#edit"
   patch "/groups/update/:id" => "groups#update"
+  get "/groups/image/:id" => "groups#image"
+  get "/users/profile" => "users#show"
+  get "/users/edit/:id" => "users#edit"
+  patch "/users/update/:id" => "users#update"
 end
