@@ -2,7 +2,7 @@
   <li>
 	<%if current_user.id != message.user_id%>    
 		<%user = User.find(message.user_id)%>
-	    <a href=<%conversations_path(user_id: encode_id(user.id))%>>
+	    <a href=<%=conversations_path(user_id: encode_id(user.id))%>>
 		    <div class="user_profile" title=<%=user.email%>>
 		    	<%=user.email[0].upcase%>
 		    </div>

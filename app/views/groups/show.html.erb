@@ -36,9 +36,9 @@
           <a href="javascript:void(0)" class="add_user" data-toggle="modal" data-target="#userList">+ Add User</a>
         <%end%>
         <hr>
-        <%@group.users.each do |user|%>
+        <%@group.users.where("user_id != ?", current_user.id).each do |user|%>
           <div>
-            <a href=<%conversations_path(user_id: encode_id(user.id))%>>
+            <a href="<%=conversations_path(user_id: encode_id(user.id))%>">
               <div class="user_profile" title=<%=user.email%>>
                 <%=user.email[0].upcase%>
               </div>
@@ -49,6 +49,18 @@
             </a>
           </div>
         <%end%>
+        <div>
+          <a href="/users/profile">
+            <div class="user_profile" title=<%=current_user.email%>>
+              <%=current_user.email[0].upcase%>
+            </div>
+            <div class="user_name">
+              <%=current_user.email%>
+              <%= "(You)"%>
+            </div>
+            <div class="cb"></div>
+          </a>
+        </div>
       </div>
     </div>
   </div>
