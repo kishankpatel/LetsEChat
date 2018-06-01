@@ -31,7 +31,9 @@
           <li>
             <div class="dropdown">
               <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-                <img src="/assets/profile_icon.png" alt="Profile" class="profile-img">
+                <!-- <img src="/assets/profile_icon.png" alt="Profile" class="profile-img"> -->
+                <img src=<%= current_user.images.present? && current_user.images.last.image.url.present? ? current_user.images.order("id").last.image.url(:thumb) : "/assets/profile_icon.png"%> class='profile-img' data-id = <%=current_user.id%>  >
+                
               </a>
               <ul class="dropdown-menu">
                 <li><a href="javascript:void(0)"><%= current_user.email %></a></li>
