@@ -23,11 +23,11 @@
           </div>
           <div class="form-group">
             <%= f.fields_for :images, @group.images, :html => { :multipart => true } do |image| %>
-              <%= image.file_field :image,:class => "hid_att", :style => "display:none;" %>
+              <%= image.file_field :image,:class => "hid_group_att", :style => "display:none;" %>
              <% end %>
-             <img src="/assets/attachment_icon.png" class="attach_file">
+             <img src="/assets/attachment_icon.png" class="attach_group_file">
              <span>Update group image</span>
-             <div class="file_name"></div>
+             <div class="group_file_name"></div>
           </div>
           <div class="form-group">
             <%= f.submit "Update Group", :class => "btn btn-primary login-btn btn-block" %>
@@ -39,11 +39,11 @@
 </div>
 
 <script type="text/javascript">
-  $(".attach_file").click(function(){
-    $(".hid_att").click();
+  $(".attach_group_file").click(function(){
+    $(".hid_group_att").click();
   })
   $('input[type="file"]').change(function(e){
       var fileName = e.target.files[0].name;
-      $(".file_name").text(fileName);
+      $(".group_file_name").text(fileName);
   });
 </script>
