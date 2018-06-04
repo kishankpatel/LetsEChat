@@ -146,8 +146,6 @@
   })
 
 
-
-
   var messages_list = $('.messages-list');
   var height = messages_list[0].scrollHeight;
   messages_list.scrollTop(height);
@@ -170,15 +168,20 @@
       if(data['sender_id'] != "<%=current_user.id%>"){
         if ("Notification" in window) {
           if (Notification.permission === "granted") {
+            if((data['message'].length) > 30){
+              var data_message = data['message'].substring(0, 30) + "..."
+            }else{
+              var data_message = data['message'];
+            }
             var options = {
-              body: data['message'],
+              body: data_message,
               icon: "/assets/profile_icon.png",
               dir : "ltr"
             };
             var notification = new Notification("New message from: "+data['email'],options);
           }
         }
-        $("#group_"+data['group_id']).find('.messages-list ul').append("<li><div class='user_profile' title='"+data['email']+"'>"+data['email'].charAt(0)+"</div><div class='message-received'>" + data['message'] + "</div><div class='clearfix'></div></li>");
+        $("#group_"+data['group_id']).find('.messages-list ul').append("<li><div class='user_profile' title='"+data['email']+"'>"+data['email'].charAt(0)+"</div><div class='message-received'>" + data['message'].replace(/\n/g, "<br />") + "</div><div class='clearfix'></div></li>");
         var messages_list = $("#group_"+data['group_id']).find('.messages-list');
         var height = messages_list[0].scrollHeight;
         messages_list.scrollTop(height);
@@ -205,6 +208,7 @@
       $(obj).closest("form").submit();
       sender_id = "<%=current_user.id%>";
       App.group_chat.conversation(msg, group_id, sender_id );
+      $("textarea").css("height","32px");
     }else{
       text_area.focus();
     }

@@ -1,6 +1,6 @@
 <li>
     <div class="<%= user.id == message.user_id ? 'message-sent' : 'message-received' %>">
-      <%= message.body %>
+      <%= simple_format(message.body) %>
     </div>
  	<div class="clearfix"></div>
 </li>

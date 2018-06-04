@@ -38,8 +38,13 @@
       if(data['recipient_id'] == "<%=current_user.id%>"){
         if ("Notification" in window) {
           if (Notification.permission === "granted") {
+            if((data['message'].length) > 30){
+              var data_message = data['message'].substring(0, 30) + "..."
+            }else{
+              var data_message = data['message'];
+            }
             var options = {
-              body: data['message'],
+              body: data_message,
               icon: "/assets/profile_icon.png",
               dir : "ltr"
             };
@@ -47,7 +52,7 @@
           }
         }
 
-        $("#conversation_"+data['conversation_id']).find('.messages-list ul').append("<li><div class='message-received'>" + data['message'] + "</div><div class='clearfix'></div></li>");
+        $("#conversation_"+data['conversation_id']).find('.messages-list ul').append("<li><div class='message-received'>" + data['message'].replace(/\n/g, "<br />") + "</div><div class='clearfix'></div></li>");
         var messages_list = $("#conversation_"+data['conversation_id']).find('.messages-list');
         var height = messages_list[0].scrollHeight;
         messages_list.scrollTop(height);
@@ -75,6 +80,7 @@
       $(obj).closest("form").submit();
       sender_id = "<%=current_user.id%>";
       App.room.speak(msg, conversation_id, recipient_id, sender_id );
+      $("textarea").css("height","32px");
     }else{
       text_area.focus();
     }
