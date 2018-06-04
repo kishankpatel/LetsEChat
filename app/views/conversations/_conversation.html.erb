@@ -1,6 +1,7 @@
 <li>
   <div class="panel panel-default" data-conversation-id="<%= conversation.id %>" id = conversation_<%=conversation.id%>>
     <div class="panel-heading">
+      <img src=<%= conversation.opposed_user(user).images.present? && conversation.opposed_user(user).images.last.image.url.present? ? conversation.opposed_user(user).images.order("id").last.image.url(:thumb) : "/assets/profile_icon.png"%> class='pf_img1 user_img' data-id = <%=conversation.opposed_user(user).id%>  >
       <%= link_to conversation.opposed_user(user).email, '', class: 'toggle-window' %>
       <%#= link_to "x", close_conversation_path(conversation), class: "btn btn-default btn-xs pull-right", remote: true, method: :post %>
     </div>
@@ -25,6 +26,7 @@
     </div>
   </div>
 </li>
+<div class="modal fade" id="displayUserImage" role="dialog"></div>  
 <script type="text/javascript">
   var messages_list = $('.messages-list');
   var height = messages_list[0].scrollHeight;
@@ -99,4 +101,18 @@
   //     App.room.speak(msg, conversation_id, recipient_id, sender_id );
   //   }
   // });
+
+  $(".user_img").click(function(){
+    var id = $(this).data("id");
+    $.ajax({
+      type: "GET",
+      url: "/users/image/"+id,
+      success: function(data) {
+        $("#displayUserImage").html(data).modal("show");
+      },
+      error: function(data){
+        alert("Got an error while fetching group image.!!!");
+      }
+    });
+  })
 </script>
