@@ -1,5 +1,6 @@
 if("<%= params[:group_message][:user_id] %>" == "<%=current_user.id%>"){
-	var messages_list = $("#group_<%=params[:group_message][:group_id]%>").find('.messages-list').find('ul').append("<%= j(render 'messages/message', message: @group_message, user: current_user) %>");
+	var messages_list = $("#group_<%=params[:group_message][:group_id]%>").find('.messages-list');
+	messages_list.find('ul').append("<%= j(render 'messages/message', message: @group_message, user: current_user) %>");
 	$('textarea').val('');
 	var height = messages_list[0].scrollHeight;
 	messages_list.scrollTop(height);

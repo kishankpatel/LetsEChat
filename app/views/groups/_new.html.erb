@@ -28,11 +28,18 @@
               <img src="/assets/attachment_icon.png" class="attach_file">
               <span>Add group image</span>
               <div class="file_name"></div>
+              <div class="show_temp_image"></div>
             </div>
             <div class="form-group">
               <%= f.submit "Create Group", :class => "btn btn-primary login-btn btn-block" %>
             </div>
           <% end %>
+
+          <%#= form_for(TempImage.new, url: "/temp_image/create", html: { method: :post }, data: {:remote => true}) do |ft| %>
+          <%= form_for TempImage.new, url: temp_image_create_path, remote: true do |f| %>
+            <%= f.file_field :image, :class => "temp_file"%>
+          <% end %>
+
         </div>
       </div>
     </div>
@@ -43,8 +50,12 @@
   $(".attach_file").click(function(){
     $(".hid_att").click();
   })
-  $('input[type="file"]').change(function(e){
+  $('.hid_att').change(function(e){
       var fileName = e.target.files[0].name;
       $(".file_name").text(fileName);
+  });
+  $('.temp_file').change(function(e){
+    $(this).closest("form").submit();
+    // $("#new_temp_image").submit();
   });
 </script>

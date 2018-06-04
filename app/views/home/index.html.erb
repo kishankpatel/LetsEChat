@@ -8,7 +8,7 @@
         <ul>
           <% @users.each do |user| %>
             <li>
-              <img src=<%= user.images.present? && user.images.last.image.url.present? ? user.images.order("id").last.image.url(:thumb) : "/assets/profile_icon.png"%> class='pf_img1 group_img' data-id = <%=user.id%>  >
+              <img src=<%= user.images.present? && user.images.last.image.url.present? ? user.images.order("id").last.image.url(:thumb) : "/assets/profile_icon.png"%> class='pf_img1 user_img' data-id = <%=user.id%>  >
               <%= link_to user.email, conversations_path(user_id: encode_id(user.id)) %>
             </li>
           <% end %>
@@ -37,3 +37,19 @@
   </div>
   <div class="clearfix"></div>
 </div>
+<div class="modal fade" id="displayUserImage" role="dialog"></div>  
+<script type="text/javascript">
+  $(".user_img").click(function(){
+    var id = $(this).data("id");
+    $.ajax({
+      type: "GET",
+      url: "/users/image/"+id,
+      success: function(data) {
+        $("#displayUserImage").html(data).modal("show");
+      },
+      error: function(data){
+        alert("Got an error while fetching group image.!!!");
+      }
+    });
+  })
+</script>
