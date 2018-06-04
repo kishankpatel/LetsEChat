@@ -5,11 +5,11 @@ class UserGroupsController < ApplicationController
     user = User.find_by_id params[:user_group][:user_id]
     # checking the group is exist or not on the behalf of current user & checking the user is an admin or not
     if group.present? 
-      if group.user_groups.where(:user_id => current_user.id).present? && group.user_groups.where(:user_id => current_user.id).first.is_admin
-        flash[:alert] = "You do not have admin access."
-        redirect_to request.referrer
-        return
-      end
+      # if group.user_groups.where(:user_id => current_user.id).present? && group.user_groups.where(:user_id => current_user.id).first.is_admin
+      #   flash[:alert] = "You do not have admin access."
+      #   redirect_to request.referrer
+      #   return
+      # end
       if group.user_groups.where(:user_id => params[:user_group][:user_id]).present?
         flash[:alert] = "User already added in the group"
         redirect_to request.referrer
