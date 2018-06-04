@@ -35,10 +35,6 @@
             </div>
           <% end %>
 
-          <%#= form_for(TempImage.new, url: "/temp_image/create", html: { method: :post }, data: {:remote => true}) do |ft| %>
-          <%= form_for TempImage.new, url: temp_image_create_path, remote: true do |f| %>
-            <%= f.file_field :image, :class => "temp_file"%>
-          <% end %>
 
         </div>
       </div>
