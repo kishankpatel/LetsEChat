@@ -30,4 +30,5 @@ Rails.application.routes.draw do
   get "/users/edit/:id" => "users#edit"
   patch "/users/update/:id" => "users#update"
   get "/users/image/:id" => "users#image"
+  post "/temp_image/create" => "temp_image#create", :as => :temp_images
 end

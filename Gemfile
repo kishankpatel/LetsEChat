@@ -51,3 +51,4 @@ gem 'bootstrap-sass', '~> 3.3.6'
 
 gem 'hashids'
 gem 'paperclip'
+gem 'remotipart', '1.4.2'
