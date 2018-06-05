@@ -1,8 +1,8 @@
 <img src= <%=@temp_image.image.url%> class="temp_image" >
 <script type="text/javascript">
+  $(".temp_attach_sec").hide();
   $(".temp_image").click(function(){
     $(".temp_image_file").click();
-    $(".temp_attach_sec").hide();
   })
   $("#temp_image_id").val("<%=@temp_image.id%>");
 </script>

@@ -8,37 +8,27 @@
       </div>
       <div class="modal-body">
         <div>
-          
           <%@group = Group.new%>
-          <%temp_image = TempImage.new %>
-          <%= form_for(temp_image, url: "/temp_image/create", html: { method: :post, :multipart => true }, :remote => true) do |f| %>
-            <%= f.file_field :image, :class => "temp_image_file", :style => "display:none"  %>
-            <div class="temp_attach_sec">
-              <img src="/assets/attachment_icon.png" class="attach_temp_file">
-              <span>Add group image</span>
-            </div>
-          <% end %>
-          <div class="show_temp_image"></div>
           <%= form_for(@group, url: "/groups/create", html: { method: :post }) do |f| %>
             <div class="form-group">
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
                 <%= f.text_field :name, required: true, class: "form-control", :placeholder => "Group Name" %>
-                <%= hidden_field_tag :temp_image_id%>
               </div>
             </div>
             <div class="form-group">
-              <div class="input-group">
-                <%= f.text_area :description, :placeholder => "Describr your group", class: "form-control" %>
-              </div>
+              <%= f.text_area :description, :placeholder => "Describr your group", class: "form-control" %>
             </div>
             <div class="form-group">  
-              <%#= f.fields_for :images, @group.images, :html => { :multipart => true } do |image| %>
-                <%#= image.file_field :image, :class => "hid_att", :style => "display:none;" %>
-              <%# end %>
-              <!-- <img src="/assets/attachment_icon.png" class="attach_file"> -->
-              <!-- <span>Add group image</span> -->
-              <!-- <div class="file_name"></div> -->
+              <%= f.fields_for :images, @group.images, :html => { :multipart => true } do |image| %>
+                <%= image.file_field :image, :class => "hid_att", :style => "display:none;" %>
+              <% end %>
+              <div class="group_attach_sec">
+                <img src="/assets/attachment_icon.png" class="attach_file">
+                <span>Add group image</span>
+              </div>
+              <img src="#" class="uploaded_image">
+              <div class="file_name"></div>
             </div>
             <div class="form-group">
               <%= f.submit "Create Group", :class => "btn btn-primary login-btn btn-block" %>
@@ -53,16 +43,24 @@
   </div>
 </div> 
 <script type="text/javascript">
-  $(".attach_temp_file").click(function(){
-    $(".temp_image_file").click();
-    $(".temp_attach_sec").hide();
+  $(".attach_file").click(function(){
+    $(".hid_att").click();
   })
-
-  $('.temp_image_file').change(function(e){
-    $(this).closest("form").submit();
-  });
-  
-  $("#new_temp_image").on("ajax:remotipartComplete", function(e, data){
-    $(".show_temp_image").html(data.responseText);
+  $('#newGroup').on('hidden.bs.modal', function () {
+    $('#new_group')[0].reset();
+    $('.uploaded_image').hide();
+    $(".file_name").text('');
+  })
+  $('.hid_att').change(function(e){
+    var fileName = e.target.files[0].name;
+    var fileType = e.target.files[0].type;
+    if (fileType.indexOf("image") >= 0){
+      $(".file_name").text(fileName);
+      readURL(this);
+    }else{
+      $('.uploaded_image').hide();
+      $(".file_name").text('');
+      alert("Please upload an image to continue.");
+    }
   });
 </script>

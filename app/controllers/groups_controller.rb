@@ -7,9 +7,8 @@ class GroupsController < ApplicationController
   	params[:group][:created_by] = current_user.id
   	group = Group.create(group_params)
   	@user_group = UserGroup.create(:user_id => current_user.id, :group_id => group.id, :added_by => current_user.id, :is_admin => 1)
-    temp_image = TempImage.find params[:temp_image_id]
-    image = Image.create(image: temp_image.image, :imageable => group) if params[:temp_image_id].present?
-  	temp_image.destroy
+    image = Image.create(image: params[:group][:images][:image], :imageable => group) if params[:group][:images].present?
+  	
     redirect_to root_path
   end
 

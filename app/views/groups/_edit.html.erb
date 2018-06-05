@@ -17,17 +17,18 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="input-group">
-              <%= f.text_area :description, :placeholder => "Describr your group", class: "form-control" %>
-            </div>
+            <%= f.text_area :description, :placeholder => "Describr your group", class: "form-control" %>
           </div>
           <div class="form-group">
             <%= f.fields_for :images, @group.images, :html => { :multipart => true } do |image| %>
               <%= image.file_field :image,:class => "hid_group_att", :style => "display:none;" %>
              <% end %>
-             <img src="/assets/attachment_icon.png" class="attach_group_file">
-             <span>Update group image</span>
-             <div class="group_file_name"></div>
+             <div class="group_attach_sec">
+                <img src="/assets/attachment_icon.png" class="attach_group_file">
+                <span>Update group image</span>
+              </div>
+              <img src="#" class="uploaded_image">
+              <div class="group_file_name"></div>
           </div>
           <div class="form-group">
             <%= f.submit "Update Group", :class => "btn btn-primary login-btn btn-block" %>
@@ -43,7 +44,15 @@
     $(".hid_group_att").click();
   })
   $('input[type="file"]').change(function(e){
-      var fileName = e.target.files[0].name;
+    var fileName = e.target.files[0].name;
+    var fileType = e.target.files[0].type;
+    if (fileType.indexOf("image") >= 0){
       $(".group_file_name").text(fileName);
+      readURL(this);
+    }else{
+      $('.uploaded_image').hide();
+      $(".group_file_name").text('');
+      alert("Please upload an image to continue.");
+    }
   });
 </script>
