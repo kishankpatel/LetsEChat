@@ -26,9 +26,14 @@
             <%= f.fields_for :images, @user.images, :html => { :multipart => true } do |image| %>
               <%= image.file_field :image,:class => "hid_user_att", :style => "display:none;" %>
              <% end %>
-             <img src="/assets/attachment_icon.png" class="attach_user_file">
-             <span>Update profile image</span>
-             <div class="file_name"></div>
+
+             <div class="user_attach_sec">
+                <img src="/assets/attachment_icon.png" class="attach_user_file">
+                <span>Update profile image</span>
+              </div>
+              <img src="#" class="uploaded_image">
+              <div class="user_file_name"></div> 
+             <div class="user_file_type"></div>                          
           </div>
           <div class="form-group">
             <%= f.submit "Update", :class => "btn btn-primary login-btn btn-block" %>
@@ -45,6 +50,16 @@
   })
   $('input[type="file"]').change(function(e){
       var fileName = e.target.files[0].name;
-      $(".file_name").text(fileName);
+      $(".user_file_name").text(fileName);
+      var fileType = e.target.files[0].type;
+      if (fileType.indexOf("image") >= 0){
+        $(".user_file_name").text(fileName);
+        readURL(this);
+      }else{
+        $('.uploaded_image').hide();
+        $(".user_file_name").text('');
+        alert("Please upload an image to continue.");
+      }
   });
+
 </script>

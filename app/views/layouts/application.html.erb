@@ -149,5 +149,9 @@
       reader.readAsDataURL(input.files[0]);
     }
   }
+  $('.modal').on('hidden.bs.modal', function () {
+    $('.uploaded_image').hide();
+    $(".file_name").text('');
+  })
   </script>
 </html>
