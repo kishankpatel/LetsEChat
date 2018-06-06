@@ -30,15 +30,42 @@
         <hr>
         <%@group.users.where("user_id != ?", current_user.id).each do |user|%>
           <div>
-            <a href="<%=conversations_path(user_id: encode_id(user.id))%>">
-              <div class="user_profile" title=<%=user.email%>>
-                <%=user.email[0].upcase%>
-              </div>
-              <div class="user_name">
-                <%=user.email%>
-              </div>
-              <div class="cb"></div>
-            </a>
+            <div class="fl">
+              <a href="<%=conversations_path(user_id: encode_id(user.id))%>">
+                <div class="user_profile" title=<%=user.email%>>
+                  <%=user.email[0].upcase%>
+                </div>
+                <div class="user_name">
+                  <%=user.email%>
+                </div>
+                <div class="cb"></div>
+              </a>
+            </div>
+            <div class="fr">
+              <% if user.user_groups.where(:group_id => @group.id ).first.is_admin %>
+                <div class="admin_txt">
+                  Admin
+                </div>
+              <%end%>
+              <% if current_user.user_groups.where(:group_id => @group.id ).first.is_admin && current_user != user %>
+                <div class="dropdown admin_action">
+                  <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="/assets/more_icon.png" alt=":" class="more_icon">
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                      <%if user.user_groups.where(:group_id => @group.id ).first.is_admin%>
+                        <a href="/user_groups/<%= @group.id%>/revoke_admin/<%=user.id%>">Revoke admin</a>
+                      <%else%>
+                        <a href="/user_groups/<%= @group.id%>/make_admin/<%=user.id%>">Make group admin</a>
+                      <%end%>
+                    </li>
+                  </ul>
+                </div>
+              <%end%>
+
+            </div>
+            <div class="cb"></div>
           </div>
         <%end%>
         <div>

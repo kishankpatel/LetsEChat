@@ -31,4 +31,6 @@ Rails.application.routes.draw do
   patch "/users/update/:id" => "users#update"
   get "/users/image/:id" => "users#image"
   post "/temp_image/create" => "temp_image#create", :as => :temp_images
+  get "/user_groups/:group_id/make_admin/:user_id" => "user_groups#make_admin"
+  get "/user_groups/:group_id/revoke_admin/:user_id" => "user_groups#revoke_admin"
 end

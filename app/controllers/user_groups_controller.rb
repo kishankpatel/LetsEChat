@@ -29,6 +29,22 @@ class UserGroupsController < ApplicationController
     render :json => User.all
   end
 
+  def make_admin
+    user = User.find params[:user_id]
+    user_group = UserGroup.get(params[:group_id], params[:user_id])
+    user_group.update_attribute :is_admin, true
+    flash[:alert] = "#{user} is now an admin."
+    redirect_to request.referrer
+  end
+
+  def revoke_admin
+    user = User.find params[:user_id]
+      user_group = UserGroup.get(params[:group_id], params[:user_id])
+    user_group.update_attribute :is_admin, false
+    flash[:alert] = "#{user.email} is no longer an admin."
+    redirect_to request.referrer
+  end
+
   private
 
   def user_groups_params
