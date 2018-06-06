@@ -37,7 +37,7 @@ ul {
 .message-received {
   background-color: #f2dede;
   margin: 5px 20px;
-  padding: 10px;
+  padding: 3px 10px 10px;
   float: left;
   border: 1px solid #f2dede;
   border-radius: 0 10px 10px;
@@ -45,6 +45,7 @@ ul {
   max-width: 80%;
   word-wrap: break-word;
 }
+.message-received a{color: #84073b;}
 .message-sent:before{
 	content: "";
     width: 0;
