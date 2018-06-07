@@ -7,7 +7,7 @@
 			    <%=user.email.truncate(30)%>
 		    </a>
 		<%end%>
-        <%= simple_format(message.body) %>
+        <%= content_with_emoji(simple_format(message.body)) %>
     </div>
     <div class="clearfix"></div>
   </li>
