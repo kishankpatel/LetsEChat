@@ -6,7 +6,6 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-
 ul {
   padding-left: 0px;
   list-style: none;
@@ -181,7 +180,7 @@ img.modal_group_img {
 .panel-body ul li {
     margin-bottom: 10px;
 }
-textarea.autoExpand{  
+.autoExpand{  
   display: block;
   box-sizing: border-box;
   overflow: hidden;

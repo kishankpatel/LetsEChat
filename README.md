@@ -39,3 +39,6 @@ https://codeforgeek.com/2014/10/desktop-notification-like-facebook-using-html5/
 * ...
 paperclip link
 http://rubythursday.com/episodes/ruby-snack-27-upgrade-paperclip-and-aws-sdk-in-prep-for-rails-5
+
+emoji gem link
+https://github.com/ID25/rails_emoji_picker

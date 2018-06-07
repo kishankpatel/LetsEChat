@@ -15,9 +15,9 @@
       <%= form_for [conversation, conversation.messages.new], remote: true do |f| %>
         <%= hidden_field_tag :recipient_id, conversation.opposed_user(user).id, :class => "recipient_id", id:"" %>
         <%= hidden_field_tag :conversation_id, conversation.id, :class => "conversation_id", id:""  %>
-        <div class="send_message_container">
+        <div class="send_message_container emoji-picker-container">
           <%= f.hidden_field :user_id, value: user.id %>
-          <%= f.text_area :body, class: "text_area autoExpand", :row => '1', "data-min-rows" => '1'  %>
+          <%= f.text_area :body, class: "text_area autoExpand", :row => '1', "data-min-rows" => '1', data: { emojiable: true }  %>
           <img src="/assets/right_arrow.jpg" alt="=>" class="send" onclick="submitForm(this)">
           <%= f.submit "Send", class: "send_msg_btn" %>
         </div>
