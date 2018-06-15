@@ -9,5 +9,5 @@ class User < ApplicationRecord
   has_many :user_groups, dependent: :destroy
   has_many :groups, through: :user_groups
   has_many :images, as: :imageable, dependent: :destroy
-  
+  has_many :blocked_users, :foreign_key => :blocked_by , :class_name => "BlockedUser", dependent: :destroy
 end

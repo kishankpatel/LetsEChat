@@ -1,19 +1,28 @@
 <li>
   <div class="panel panel-default" data-conversation-id="<%= conversation.id %>" id = conversation_<%=conversation.id%>>
     <div class="panel-heading">
-      <img src=<%= conversation.opposed_user(user).images.present? && conversation.opposed_user(user).images.last.image.url.present? ? conversation.opposed_user(user).images.order("id").last.image.url(:thumb) : "/assets/profile_icon.png"%> class='pf_img1 user_img' data-id = <%=conversation.opposed_user(user).id%>  >
-      <%= link_to conversation.opposed_user(user).email, '', class: 'toggle-window' %>
+      <%recipient = conversation.opposed_user(user)%>
+      <img src=<%= recipient.images.present? && recipient.images.last.image.url.present? ? recipient.images.order("id").last.image.url(:thumb) : "/assets/profile_icon.png"%> class='pf_img1 user_img' data-id = <%=recipient.id%>  >
+      <%= link_to recipient.email, "users/#{encode_id(recipient.id)}", class: 'toggle-window' %>
       <%#= link_to "x", close_conversation_path(conversation), class: "btn btn-default btn-xs pull-right", remote: true, method: :post %>
     </div>
 
     <div class="panel-body">
       <div class="messages-list">
+        <div class="blocked_user_sec">
+          <%if current_user.blocked_users.where(:blocked_to => recipient.id).present? %>
+            <a href="/users/unblock/<%=encode_id(recipient.id)%>">UnBlock</a>
+          <%elsif ( current_user.blocked_users.where(:blocked_to => recipient.id).present? || !conversation.is_accepted) && conversation.recipient_id == current_user.id%>
+            <a href="/users/block/<%=encode_id(recipient.id)%>">Block</a>
+            <a href="/conversations/accept/<%=encode_id(conversation.id)%>">Accept</a>
+          <%end%>
+        </div>
         <ul>
           <%= render 'conversations/conversation_content', messages: conversation.messages.order("created_at"), user: user %>
         </ul>
       </div>
       <%= form_for [conversation, conversation.messages.new], remote: true do |f| %>
-        <%= hidden_field_tag :recipient_id, conversation.opposed_user(user).id, :class => "recipient_id", id:"" %>
+        <%= hidden_field_tag :recipient_id, recipient.id, :class => "recipient_id", id:"" %>
         <%= hidden_field_tag :conversation_id, conversation.id, :class => "conversation_id", id:""  %>
         <div class="send_message_container emoji-picker-container">
           <%= f.hidden_field :user_id, value: user.id %>

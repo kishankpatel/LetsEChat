@@ -18,14 +18,16 @@
                     <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
                       <img src="/assets/more_icon.png" alt=":" class="more_icon">
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-right">
-                      <li>
-                        <%= link_to "javascript:void(0)", :class => "edit_user", "data-id" => @user.id do %>
-                          <span class="glyphicon glyphicon-pencil"></span>
-                          Edit
-                        <%end%> 
-                      </li>
-                    </ul>
+                    <% if @user.id == current_user.id %>
+                      <ul class="dropdown-menu dropdown-menu-right">
+                        <li>
+                          <%= link_to "javascript:void(0)", :class => "edit_user", "data-id" => @user.id do %>
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            Edit
+                          <%end%> 
+                        </li>
+                      </ul>
+                    <%end%>
                   </div>
                </div>
                <div class="cb"></div>
@@ -35,8 +37,7 @@
                   <div class="box-body">
                      <div class="col-sm-6">
                         <div  align="center">
-                           <img src=<%= @user.images.present? && @user.images.last.image.url.present? ? @user.images.order("id").last.image.url(:thumb) : "/assets/group_icon.png"%> class='pf_img1 user_img img-circle img-responsive' data-id = <%=@user.id%> id="profile-image1">
-                           
+                           <img src=<%= @user.images.present? && @user.images.last.image.url.present? ? @user.images.order("id").last.image.url(:thumb) : "/assets/profile_icon.png"%> class='pf_img1 user_img img-circle img-responsive' data-id = <%=@user.id%> id="profile-image1">
                            <input id="profile-image-upload" class="hidden" type="file">
                            <!-- <div style="color:#999;" >click here to change profile image</div> -->
                            <!--Upload Image Js And Css-->

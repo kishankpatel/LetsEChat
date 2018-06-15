@@ -42,3 +42,35 @@ http://rubythursday.com/episodes/ruby-snack-27-upgrade-paperclip-and-aws-sdk-in-
 
 emoji gem link
 https://github.com/ID25/rails_emoji_picker
+
+
+TO DO: 
+
+action cable with attachment
+https://scotch.io/tutorials/uploading-files-with-rails-and-actioncable
+
+Send friend request.
+
+Email confirmation to sign in.
+
+Search user.
+
+Search for all message.
+
+Search message with in a conversation and a group.
+
+Image croping.
+
+Forward message.
+
+Replay message.
+
+Display new message Notification.
+
+Block/Unblock Contact.
+
+Settings: 
+	Account, 
+	Chat{Enter is send, Font Size, Walpaper, Chat backup(Import), Export Chat, Email Chat, Clear Chat}, 
+	Notification,
+	Help {FAQ, Contact Us, Terms & Privacy, App Info}

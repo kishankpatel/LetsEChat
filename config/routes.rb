@@ -33,4 +33,8 @@ Rails.application.routes.draw do
   post "/temp_image/create" => "temp_image#create", :as => :temp_images
   get "/user_groups/:group_id/make_admin/:user_id" => "user_groups#make_admin"
   get "/user_groups/:group_id/revoke_admin/:user_id" => "user_groups#revoke_admin"
+  get "/users/:id" => "users#show"
+  get "/users/block/:id" => "users#block"
+  get "/users/unblock/:id" => "users#unblock"
+  get "/conversations/accept/:id" => "conversations#accept"
 end

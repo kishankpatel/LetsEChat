@@ -227,3 +227,22 @@ img.uploaded_image {
     margin-right: 5px;
 }
 .admin_action{display:inline-block;}
+.blocked_user_sec {
+    text-align: center;
+    margin: 0 auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+.blocked_user_sec a {
+    background: #333;
+    color: #fff;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+.blocked_user_sec a:hover {
+    text-decoration: none;
+    box-shadow: 0 2px 5px #333;
+}
