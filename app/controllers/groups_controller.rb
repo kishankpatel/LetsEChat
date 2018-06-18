@@ -1,4 +1,5 @@
 class GroupsController < ApplicationController
+  before_filter :encrypt_group_id, :only => [:show]
   def new
   	@group = Group.new
   end
@@ -13,9 +14,10 @@ class GroupsController < ApplicationController
   end
 
   def show
-  	@group = Group.find_by_id params[:id]
+  	@group = current_user.groups.where(:id => params[:id]).first
   	unless @group.present?
   		redirect_to root_path
+      return
   	end
   	@group_message = GroupMessage.new
     user_group = @group.users.where("user_id =?", current_user.id).first

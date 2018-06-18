@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-md-3">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">User list</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+          <% @users.each do |user| %>
+            <li>
+              <%if user.is_blocked_by(current_user.id)%>
+                <img src="/assets/profile_icon.png" class='pf_img1'>
+              <%else%>
+                <img src=<%= user.images.present? && user.images.last.image.url.present? ? user.images.order("id").last.image.url(:thumb) : "/assets/profile_icon.png"%> class='pf_img1 user_img' data-id = <%=user.id%>  >
+              <%end%>
+              <%= link_to user.email, "/conversations/#{encode_id(user.id)}" %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <% if @groups.present? %>  
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Groups</h3>
+        </div>
+        <div class="panel-body">
+          <ul>
+            <% @groups.each do |group| %>
+              <li>
+                <img src=<%= group.images.present? && group.images.last.image.url.present? ? group.images.order("id").last.image.url(:thumb) : "/assets/group_icon.png"%> class='pf_img1 group_img' data-id = <%=group.id%> >
+                <%= link_to "/groups/#{encode_group_id(group.id)}" do %>
+                  <span><%=group.name%></span>
+                <%end%>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <%end%>
+  </div>
+  <div class="clearfix"></div>
+</div>
+
+
+<div class="modal fade" id="displayUserImage" role="dialog"></div>  
+<script type="text/javascript">
+  $(".user_img").click(function(){
+    var id = $(this).data("id");
+    $.ajax({
+      type: "GET",
+      url: "/users/image/"+id,
+      success: function(data) {
+        $("#displayUserImage").html(data).modal("show");
+      },
+      error: function(data){
+        alert("Got an error while fetching group image.!!!");
+      }
+    });
+  })
+</script>

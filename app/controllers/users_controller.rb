@@ -7,6 +7,11 @@ class UsersController < ApplicationController
   def show
     if params[:id].present?
       @user = User.find params[:id]
+      if @user.blocked_users.where(:blocked_to => current_user.id).present?
+        flash[:alert] = "#{@user.email} has been blocked you."
+        redirect_to request.referrer
+        return
+      end
     else
       @user = current_user
     end
@@ -16,7 +21,7 @@ class UsersController < ApplicationController
     render partial:"edit"
   end
   def update
-    if params[:id] == current_user.id
+    if params[:id] == current_user.id.to_s
       user = User.find(params[:id])
       user.update_attributes(user_params)
       image = Image.create(image: params[:user][:images][:image], :imageable => user) if params[:user][:images].present?

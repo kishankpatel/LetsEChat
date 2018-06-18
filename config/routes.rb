@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     resources :messages, only: [:create]
   end
   # mount ActionCable.server => '/cable'
-  get "/conversations", to: "conversations#create"
+  get "/conversations/:user_id", to: "conversations#create"
   get "/groups/new", to: "groups#new"
   get "/groups/:id" => "groups#show"
   post "/groups/create", to: "groups#create"

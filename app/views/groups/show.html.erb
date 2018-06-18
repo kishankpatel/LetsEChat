@@ -69,16 +69,26 @@
           </div>
         <%end%>
         <div>
-          <a href="/users/profile">
-            <div class="user_profile" title=<%=current_user.email%>>
-              <%=current_user.email[0].upcase%>
-            </div>
-            <div class="user_name">
-              <%=current_user.email%>
-              <%= "(You)"%>
-            </div>
-            <div class="cb"></div>
-          </a>
+          <div class="fl">
+            <a href="/users/profile">
+              <div class="user_profile" title=<%=current_user.email%>>
+                <%=current_user.email[0].upcase%>
+              </div>
+              <div class="user_name">
+                <%=current_user.email%>
+                <%= "(You)"%>
+              </div>
+              <div class="cb"></div>
+            </a>
+          </div>
+          <div class="fr">
+            <% if current_user.user_groups.where(:group_id => @group.id ).first.is_admin %>
+              <div class="admin_txt">
+                Admin
+              </div>
+            <%end%>
+          </div>
+          <div class="cb"></div>
         </div>
       </div>
     </div>

@@ -10,4 +10,7 @@ class User < ApplicationRecord
   has_many :groups, through: :user_groups
   has_many :images, as: :imageable, dependent: :destroy
   has_many :blocked_users, :foreign_key => :blocked_by , :class_name => "BlockedUser", dependent: :destroy
+  def is_blocked_by id
+    self.blocked_users.where(:blocked_to => id).present?
+  end
 end
