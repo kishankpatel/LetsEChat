@@ -37,9 +37,9 @@
     <div class="panel-body">
       <div class="messages-list">
         <div class="blocked_user_sec">
-          <%if !current_user.is_blocked_by(recipient.id) && !conversation.is_accepted %>
-            <a href="/users/block/<%=encode_id(recipient.id)%>">Block</a>
-          <%end%>
+          <%#if !current_user.is_blocked_by(recipient.id) && !conversation.is_accepted %>
+            <!-- <a href="/users/block/<%=encode_id(recipient.id)%>">Block</a> -->
+          <%#end%>
           <%if !conversation.is_accepted && conversation.recipient_id == current_user.id%>
             <a href="/users/block/<%=encode_id(recipient.id)%>">Block</a>
             <a href="/conversations/accept/<%=encode_id(conversation.id)%>">Accept</a>
