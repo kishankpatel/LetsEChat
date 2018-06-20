@@ -30,7 +30,7 @@
         <% if user_signed_in? %>
           <li>
             <div class="scarch_user_sec">
-              <input type="text" placeholder="Search" name="search_user" id="search_user">
+              <input type="text" placeholder="Type to search user.." name="search_user" id="search_user">
               <div class="display_user_list"></div>
             </div>
           </li>
@@ -190,7 +190,7 @@
         url: "/get_users",
         data: {query: search},
         success: function(data) {
-          if(data == "blank_search"){
+          if( (data == "blank_search") || (data == "" || data == null) ){
             $(".display_user_list").hide().html(''); 
           }else{
             $(".display_user_list").show().html(data);
@@ -211,7 +211,9 @@
       // if the target of the click isn't the container nor a descendant of the container
       if (!container.is(e.target) && container.has(e.target).length === 0) 
       {
-          container.find(".display_user_list").hide();
+        container.hide();
+        $("#search_user").val("");
+        $(".display_user_list").hide();
       }
   });
 
