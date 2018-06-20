@@ -78,6 +78,91 @@
         </div>
       </div>
     </div>
+    <div class="col-sm-5">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div>
+            <% if @user.id == current_user.id %>
+              <h4 >General Info.</h4>
+            <%else%>
+              <h4 >Common Groups</h4>
+            <%end%>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="box box-info">
+            <div class="box-body">
+              <% if @user.id == current_user.id %>
+                <div class="col-sm-5 col-xs-6 tital " >Total Groups:</div>
+                <div class="col-sm-7 col-xs-6 dropdown user_groups_sec">
+
+                  <a href="javascript:void(0)" class="dropdown-toggle groups_count" data-toggle="dropdown"><%=@user.user_groups.count%></a>
+                  <%groups = @user.groups%>
+                  <% if groups.present? %>  
+                    <ul class="dropdown-menu dropdown-menu-right">
+                      <% groups.each do |group| %>
+                        <li>
+                          <%= link_to "/groups/#{encode_group_id(group.id)}" do %>
+                            <img src=<%= group.images.present? && group.images.last.image.url.present? ? group.images.order("id").last.image.url(:thumb) : "/assets/group_icon.png"%> class='pf_img1'>
+                            <span><%=group.name%></span>
+                          <%end%>
+                        </li>
+                      <% end %>
+                    </ul>
+                  <%end%>
+                </div>
+                <div class="clearfix"></div>
+                <div class="bot-border"></div>
+
+                <div class="col-sm-5 col-xs-6 tital " >Total Conversations:</div>
+                <div class="col-sm-7 col-xs-6 dropdown user_conv_sec">
+                  <a href="javascript:void(0)" class="dropdown-toggle conv_count" data-toggle="dropdown"><%=@user.conversations.count%></a>
+                  <%conversations = @user.conversations%>
+                  <% if conversations.present? %>  
+                    <ul class="dropdown-menu dropdown-menu-right">
+                      <% conversations.each do |conversation| %>
+                        <li>
+                          <%recipient = conversation.opposed_user(current_user)%>
+                          <%= link_to "/conversations/#{encode_group_id(conversation.id)}" do %>
+                            <img src=<%= recipient.images.present? && recipient.images.last.image.url.present? ? recipient.images.order("id").last.image.url(:thumb) : "/assets/user_icon.png"%> class='pf_img1' >
+                            <span title=<%="#{recipient.full_name} : #{recipient.email}"%>><%=recipient.email.truncate(20)%></span>
+                          <%end%>
+                        </li>
+                      <% end %>
+                    </ul>
+                  <%end%>
+                </div>
+                <div class="clearfix"></div>
+                <div class="bot-border"></div>
+              <%else%>
+                <div class="col-sm-5 col-xs-6 tital " >Total Groups:</div>
+                  <div class="col-sm-7 col-xs-6 dropdown user_groups_sec">
+
+                    <%groups = Group.where("id in (?)", (@user.groups.collect(&:id) & current_user.groups.collect(&:id)) ) %>
+                    <%groups = @user.groups & current_user.groups %>
+                    <a href="javascript:void(0)" class="dropdown-toggle groups_count" data-toggle="dropdown"><%=groups.count%></a>
+                    <% if groups.present? %>  
+                      <ul class="dropdown-menu dropdown-menu-right">
+                        <% groups.each do |group| %>
+                          <li>
+                            <%= link_to "/groups/#{encode_group_id(group.id)}" do %>
+                              <img src=<%= group.images.present? && group.images.last.image.url.present? ? group.images.order("id").last.image.url(:thumb) : "/assets/group_icon.png"%> class='pf_img1'>
+                              <span><%=group.name%></span>
+                            <%end%>
+                          </li>
+                        <% end %>
+                      </ul>
+                    <%end%>
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="bot-border"></div>
+              <%end%>
+            </div>
+            <!-- /.box -->
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <div class="modal fade" id="editUser" role="dialog"></div> 
@@ -88,6 +173,8 @@
   // $('#profile-image-upload').click();
   // });
   // }); 
+
+  
   $(".edit_user").click(function(){
     var id = $(this).data("id");
     $.ajax({

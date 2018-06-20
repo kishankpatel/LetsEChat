@@ -74,3 +74,5 @@ Settings:
 	Chat{Enter is send, Font Size, Walpaper, Chat backup(Import), Export Chat, Email Chat, Clear Chat}, 
 	Notification,
 	Help {FAQ, Contact Us, Terms & Privacy, App Info}
+
+Remove user from group, Left Group	

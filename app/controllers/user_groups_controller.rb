@@ -25,10 +25,6 @@ class UserGroupsController < ApplicationController
     end
   end
 
-  def my_contacts
-    render :json => User.all
-  end
-
   def make_admin
     user = User.find params[:user_id]
     user_group = UserGroup.get(params[:group_id], params[:user_id])

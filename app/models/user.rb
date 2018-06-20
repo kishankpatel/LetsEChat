@@ -13,4 +13,8 @@ class User < ApplicationRecord
   def is_blocked_by id
     self.blocked_users.where(:blocked_to => id).present?
   end
+  def full_name
+    # self.first_name + " " + self.last_name
+    "#{self.first_name} #{self.last_name}"
+  end
 end

@@ -1,8 +1,16 @@
 class UsersController < ApplicationController
   before_filter :encrypt_id, :only => [:show, :block, :unblock]
   def my_contacts
-    @users = User.all
+    @users = current_user.conversations.map{|c| c.opposed_user(current_user) if( c.opposed_user(current_user).email.downcase.include?(params[:query].downcase) || c.opposed_user(current_user).full_name.downcase.include?(params[:query].downcase) )}[0..5]
     render :json => @users
+  end
+  def get_users
+    if params[:query].present?
+      @users = User.all.where("(LOWER(email) like :search_query OR LOWER(first_name) like :search_query OR LOWER(last_name) like :search_query) AND id != '#{current_user.id}'", search_query: "%#{params[:query].downcase}%").limit(10)
+      render :partial => "show_user_list"
+    else
+      render :text => "blank_search"
+    end
   end
   def show
     if params[:id].present?
@@ -34,7 +42,7 @@ class UsersController < ApplicationController
 
   def image
     @user = User.find params[:id]
-      render :partial => "show_image"
+    render :partial => "show_image"
   end
 
   def block

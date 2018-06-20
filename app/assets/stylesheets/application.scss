@@ -249,3 +249,51 @@ img.uploaded_image {
 .text_center{text-align: center;}
 .text_left{text-align: left;}
 .text_right{text-align: right;}
+.user_groups_sec .dropdown-menu, .user_conv_sec .dropdown-menu{max-height: 300px;overflow-y: auto;position: absolute;width: 200px;}
+.groups_count, .conv_count{
+  border-radius: 50%;
+  display: inline-block;
+  padding: 5px 10px;
+  text-decoration: none;
+}
+.groups_count:hover, .conv_count:hover, .groups_count:active, .conv_count:active{
+  background: #eee;
+  text-decoration: none;
+}
+.scarch_user_sec {
+    position: relative;
+}
+.display_user_list {
+    position: absolute;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #aaa;
+    max-height: 300px;
+    overflow-y: auto;
+    display:none;
+    z-index: 9;
+}
+
+.display_user_list a:hover {
+    background: #eee;
+}
+
+.display_user_list a {
+    display: block;
+    padding: 5px;
+    text-decoration: none;
+    color: #333;
+}
+.scarch_user_sec{display:none;margin-top: 9px;}
+.scarch_user_sec input#search_user {
+    border-radius: 10px;
+    border: 1px solid #333;
+    padding: 5px;
+    outline: none;
+}
+.scarch_user_sec input#search_user:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}

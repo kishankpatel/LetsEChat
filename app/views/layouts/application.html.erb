@@ -29,6 +29,12 @@
 
         <% if user_signed_in? %>
           <li>
+            <div class="scarch_user_sec">
+              <input type="text" placeholder="Search" name="search_user" id="search_user">
+              <div class="display_user_list"></div>
+            </div>
+          </li>
+          <li>
             <div class="dropdown">
               <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
                 <!-- <img src="/assets/profile_icon.png" alt="Profile" class="profile-img"> -->
@@ -37,6 +43,8 @@
               </a>
               <ul class="dropdown-menu">
                 <li><a href="javascript:void(0)"><%= current_user.email %></a></li>
+                <li class="divider"></li>
+                <li><a href="javascript:void(0)" class="search_user_btn">Search User</a></li>
                 <li class="divider"></li>
                 <li><a href="/users/profile">My Profile</a></li>
                 <li class="divider"></li>
@@ -52,6 +60,7 @@
               </ul>
             </div>
           </li>
+
         <% else %>
           <%- if controller_name != 'registrations' %>
             <li>
@@ -68,6 +77,7 @@
           <% end -%>
         <% end %>
       </ul>
+
     </div>
   </nav>
     <div class="container">
@@ -160,5 +170,55 @@
     $('.uploaded_image').hide();
     $(".file_name").text('');
   })
+
+
+  String.prototype.ltrim = function() {
+      var trimmed = this.replace(/^\s+/g, ''); // fro right trim use replace(/\s+$/g, '');
+      return trimmed;
+  };
+
+  $(".search_user_btn").click(function(){
+    $(".scarch_user_sec").toggle("slow");
+    $(".scarch_user_sec").find("#search_user").focus();
+  })
+
+  $("#search_user").on('keyup', function(){
+    var search = $(this).val().ltrim();
+    if(search.length > 0){
+      $.ajax({
+        type: "GET",
+        url: "/get_users",
+        data: {query: search},
+        success: function(data) {
+          if(data == "blank_search"){
+            $(".display_user_list").hide().html(''); 
+          }else{
+            $(".display_user_list").show().html(data);
+          }
+        },
+        error: function(data){
+          alert("Got an error while fetching users.!!!");
+        }
+      });
+    }else{
+      $(".display_user_list").hide();
+    }
+  })
+  $(document).mouseup(function(e) 
+  {
+      var container = $(".scarch_user_sec");
+
+      // if the target of the click isn't the container nor a descendant of the container
+      if (!container.is(e.target) && container.has(e.target).length === 0) 
+      {
+          container.find(".display_user_list").hide();
+      }
+  });
+
+
+  $(".group_info").on('click', function(){
+    $(".user_list").slideToggle();
+  })
+
   </script>
 </html>

@@ -31,7 +31,7 @@
         <%@group.users.where("user_id != ?", current_user.id).each do |user|%>
           <div>
             <div class="fl">
-              <a href="<%=conversations_path(user_id: encode_id(user.id))%>">
+              <a href="/conversations/<%=encode_id(user.id)%>">
                 <div class="user_profile" title=<%=user.email%>>
                   <%=user.email[0].upcase%>
                 </div>
@@ -153,16 +153,19 @@
       }
     });
   })
-  var options = {
-    url: "/my_contacts",
+  var contact_options = {
+    url: function(val) {
+      return "/my_contacts?query=" + val;
+    },
     getValue: "email",
-    // template: {
-    //     type: "description",
-    //     fields: {
-    //         description: "email"
-    //     }
-    // },
+    template: {
+        type: "description",
+        fields: {
+            description: "first_name"  
+        }
+    },
     list: {
+        // maxNumberOfElements: 10,
         match: {
             enabled: true
         },
@@ -176,7 +179,7 @@
     theme: "plate-light"
   };
 
-  $("#my_contacts").easyAutocomplete(options);
+  $("#my_contacts").easyAutocomplete(contact_options);
 
   $(".group_info").on('click', function(){
     $(".user_list").slideToggle();

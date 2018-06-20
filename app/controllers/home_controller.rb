@@ -5,7 +5,7 @@ class HomeController < ApplicationController
 	    @groups = current_user.groups                                 
 	    session[:conversations] ||= []
 	 
-	    @users = User.all.where.not(id: current_user)
+	    @users = current_user.conversations.map{|c| c.opposed_user(current_user)}
 	    @conversations = Conversation.includes(:recipient, :messages)
 	                                 .find(session[:conversations])
 	end	                            
