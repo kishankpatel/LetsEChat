@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :messages
-  has_many :conversations, foreign_key: :sender_id
+  # has_many :conversations, foreign_key: :sender_id
   has_many :user_groups, dependent: :destroy
   has_many :groups, through: :user_groups
   has_many :images, as: :imageable, dependent: :destroy
@@ -16,5 +16,9 @@ class User < ApplicationRecord
   def full_name
     # self.first_name + " " + self.last_name
     "#{self.first_name} #{self.last_name}"
+  end
+
+  def conversations
+    Conversation.where("sender_id = :self_id OR recipient_id = :self_id", {self_id: self.id}) 
   end
 end

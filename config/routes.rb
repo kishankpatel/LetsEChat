@@ -38,4 +38,10 @@ Rails.application.routes.draw do
   get "/users/block/:id" => "users#block"
   get "/users/unblock/:id" => "users#unblock"
   get "/conversations/accept/:id" => "conversations#accept"
+
+  # common pages
+  get "/faqs" => "home#faqs"
+  get "/contact_us" => "home#contact_us"
+  get "/terms_and_privacy" => "home#terms_and_privacy"
+  get "/about_us" => "home#about_us"
 end

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Let's E-Chat</title>
+    <title><%= @title.present? ? @title : "Let's E-Chat"%></title>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
@@ -43,15 +43,20 @@
               </a>
               <ul class="dropdown-menu">
                 <li><a href="javascript:void(0)"><%= current_user.email %></a></li>
-                <li class="divider"></li>
                 <li><a href="javascript:void(0)" class="search_user_btn">Search User</a></li>
-                <li class="divider"></li>
                 <li><a href="/users/profile">My Profile</a></li>
-                <li class="divider"></li>
                 <li>
                   <a href="javascript:void(0)" class="add_group" data-toggle="modal" data-target="#newGroup">+ Create Group</a>
                 </li>
-                <li class="divider"></li>
+                <!-- <li class="dropdown-submenu">
+                  <a href="javascript:void(0)" class="sub_menu_btn">Settings <span class="caret"></a>
+                  <ul class="dropdown-menu">
+                    <li><a tabindex="-1" href="/faqs">FAQ</a></li>
+                    <li><a tabindex="-1" href="/contact_us">Contact Us</a></li>
+                    <li><a tabindex="-1" href="/terms_and_privacy">Terms & Privacy</a></li>
+                    <li><a tabindex="-1" href="/about_us">About Us</a></li>
+                  </ul>
+                </li> -->
                 <li><%= link_to(destroy_user_session_path, method: :delete) do %>
                   <span class="glyphicon glyphicon-log-in"></span>
                   LogOut
@@ -90,10 +95,12 @@
     <%= render partial:"/groups/new"%>
   <%end%>
   <script type="text/javascript">
+    // hide alert message after 10 second.
     $(".alert").fadeOut(10000);
     // if(!(Notification.permission === "granted")){
     //   $(".notify_btn_sec").html("<button onclick='notifyMe()' class='notify_btn'>Notify me!</button>");
     // }
+    // setting auto expand of text area of chat.
     $(".autoExpand").rows = 0;
     $(document)
       .one('focus.autoExpand', 'textarea.autoExpand', function(){
@@ -154,34 +161,38 @@
       }
     });
   })
-  function readURL(input) {
 
+  // Display image after choosing a image from devise.
+  function readURL(input) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();
-
       reader.onload = function(e) {
         $('.uploaded_image').show().attr('src', e.target.result);
       }
-
       reader.readAsDataURL(input.files[0]);
     }
   }
+
+  // hide uploaded image and file name after modal has been closed
   $('.modal').on('hidden.bs.modal', function () {
     $('.uploaded_image').hide();
     $(".file_name").text('');
   })
 
 
+  // created ltrim function to trim text from left side
   String.prototype.ltrim = function() {
-      var trimmed = this.replace(/^\s+/g, ''); // fro right trim use replace(/\s+$/g, '');
-      return trimmed;
+    var trimmed = this.replace(/^\s+/g, ''); // fro right trim use replace(/\s+$/g, '');
+    return trimmed;
   };
 
+  // Display search field after clicking on sear user option from header.
   $(".search_user_btn").click(function(){
     $(".scarch_user_sec").toggle("slow");
     $(".scarch_user_sec").find("#search_user").focus();
   })
 
+  // Ajax call to search users after typing on search field.
   $("#search_user").on('keyup', function(){
     var search = $(this).val().ltrim();
     if(search.length > 0){
@@ -204,6 +215,8 @@
       $(".display_user_list").hide();
     }
   })
+
+  // Hide search bar after clicking on outside of the search section.
   $(document).mouseup(function(e) 
   {
       var container = $(".scarch_user_sec");
@@ -217,6 +230,29 @@
       }
   });
 
+  // Display submenu after clicking on a list from menu.
+  $(document).ready(function(){
+    $('.dropdown-submenu a.sub_menu_btn').on("click", function(e){
+      $(this).next('ul').toggle();
+      e.stopPropagation();
+      e.preventDefault();
+    });
+  });
+
+  // Hide submenu after clicking on outside of the sub menu
+  $(document).mouseup(function(e) 
+  {
+    var container = $(".dropdown-submenu");
+    // if the target of the click isn't the container nor a descendant of the container
+    if (!container.is(e.target) && container.has(e.target).length === 0) 
+    {
+      container.find(".dropdown-menu").hide();
+    }
+  });
+
+  function show_alert_message(type, message){
+
+  }
 
   </script>
 </html>

@@ -10,4 +10,20 @@ class HomeController < ApplicationController
 	                                 .find(session[:conversations])
 	end	                            
   end
+
+  def faqs
+  	@title = "FAQs - Let's E-Chat"
+  end
+
+  def contact_us
+  	@title = "Contact Us - Let's E-Chat"
+  end
+
+  def terms_and_privacy
+  	@title = "Terms and Privacy - Let's E-Chat"
+  end
+
+  def about_us
+  	@title = "About Us - Let's E-Chat"  	
+  end
 end

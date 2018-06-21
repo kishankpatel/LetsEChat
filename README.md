@@ -53,7 +53,7 @@ Send friend request.
 
 Email confirmation to sign in.
 
-Search user.
+Search user. - DONE
 
 Search for all message.
 
@@ -67,7 +67,7 @@ Replay message.
 
 Display new message Notification.
 
-Block/Unblock Contact.
+Block/Unblock Contact. - DONE # nedd to implement with actioncable
 
 Settings: 
 	Account, 
@@ -76,3 +76,5 @@ Settings:
 	Help {FAQ, Contact Us, Terms & Privacy, App Info}
 
 Remove user from group, Left Group	
+
+Every action should be in Ajax.
