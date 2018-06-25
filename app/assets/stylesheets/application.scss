@@ -314,3 +314,39 @@ ul.dropdown-menu li:not(:last-child) a{border-bottom: 1px solid #ddd;}
 ul.dropdown-menu {
     padding: 0;
 }
+a.back_button:hover {
+    box-shadow: 0 2px 5px #999;
+}
+a.back_button {
+    border: 1px solid #444;
+    color: #444;
+    display: inline-block;
+    text-decoration: none;
+    padding: 2px 5px;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+}
+.pf_cntr, .chat_info_cntr{
+  display: inline-block;
+  vertical-align: middle;
+}
+.chat_info_cntr p{
+  margin: 0;
+  font-size: 11px;
+}
+.chat_info_cntr span.glyphicon-arrow-right{
+  font-size: 8px;
+}
+
+
+@media only screen and (max-width: 768px) {
+
+  ul.dropdown-menu li:not(:last-child) a {
+      border-bottom: 1px solid #666;
+  }
+
+}
+

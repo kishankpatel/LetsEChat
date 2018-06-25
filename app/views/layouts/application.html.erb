@@ -15,78 +15,81 @@
   </head>
   <body>
     <div class="notify_btn_sec"></div>
-  <nav class="navbar navbar-inverse ">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="/" style="padding-top: 10px;"><img src="/assets/logo.png" height="35px" style="display: inline-block;margin-right: 5px;"><span>Let's E-Chat</span></a>
-      </div>
-<!--      <ul class="nav navbar-nav">
-        <li class="active"><a href="/">Home</a></li>
-      </ul> -->
- 
-      <ul class="nav navbar-nav navbar-right">
-        
+    <nav class="navbar navbar-inverse ">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/" style="padding-top: 10px;"><img src="/assets/logo.png" height="35px" style="display: inline-block;margin-right: 5px;"><span>Let's E-Chat</span></a>
+        </div>
+      <!--      <ul class="nav navbar-nav">
+          <li class="active"><a href="/">Home</a></li>
+        </ul> -->
+   
+        <ul class="nav navbar-nav navbar-right">
+          
 
-        <% if user_signed_in? %>
-          <li>
-            <div class="scarch_user_sec">
-              <input type="text" placeholder="Type to search user.." name="search_user" id="search_user">
-              <div class="display_user_list"></div>
-            </div>
-          </li>
-          <li>
-            <div class="dropdown">
-              <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-                <!-- <img src="/assets/profile_icon.png" alt="Profile" class="profile-img"> -->
-                <img src=<%= current_user.images.present? && current_user.images.last.image.url.present? ? current_user.images.order("id").last.image.url(:thumb) : "/assets/profile_icon.png"%> class='profile-img' data-id = <%=current_user.id%>  >
-                
-              </a>
-              <ul class="dropdown-menu">
-                <li><a href="javascript:void(0)"><%= current_user.email %></a></li>
-                <li><a href="javascript:void(0)" class="search_user_btn">Search User</a></li>
-                <li><a href="/users/profile">My Profile</a></li>
-                <li>
-                  <a href="javascript:void(0)" class="add_group" data-toggle="modal" data-target="#newGroup">+ Create Group</a>
-                </li>
-                <!-- <li class="dropdown-submenu">
-                  <a href="javascript:void(0)" class="sub_menu_btn">Settings <span class="caret"></a>
-                  <ul class="dropdown-menu">
-                    <li><a tabindex="-1" href="/faqs">FAQ</a></li>
-                    <li><a tabindex="-1" href="/contact_us">Contact Us</a></li>
-                    <li><a tabindex="-1" href="/terms_and_privacy">Terms & Privacy</a></li>
-                    <li><a tabindex="-1" href="/about_us">About Us</a></li>
-                  </ul>
-                </li> -->
-                <li><%= link_to(destroy_user_session_path, method: :delete) do %>
+          <% if user_signed_in? %>
+            <li>
+              <div class="scarch_user_sec">
+                <input type="text" placeholder="Type to search user.." name="search_user" id="search_user">
+                <div class="display_user_list"></div>
+              </div>
+            </li>
+            <li>
+              <div class="dropdown">
+                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                  <!-- <img src="/assets/profile_icon.png" alt="Profile" class="profile-img"> -->
+                  <img src=<%= current_user.images.present? && current_user.images.last.image.url.present? ? current_user.images.order("id").last.image.url(:thumb) : "/assets/profile_icon.png"%> class='profile-img' data-id = <%=current_user.id%>  >
+                  
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="javascript:void(0)"><%= current_user.email %></a></li>
+                  <li><a href="javascript:void(0)" class="search_user_btn">Search User</a></li>
+                  <li><a href="/users/profile">My Profile</a></li>
+                  <li>
+                    <a href="javascript:void(0)" class="add_group" data-toggle="modal" data-target="#newGroup">+ Create Group</a>
+                  </li>
+                  <!-- <li class="dropdown-submenu">
+                    <a href="javascript:void(0)" class="sub_menu_btn">Settings <span class="caret"></a>
+                    <ul class="dropdown-menu">
+                      <li><a tabindex="-1" href="/faqs">FAQ</a></li>
+                      <li><a tabindex="-1" href="/contact_us">Contact Us</a></li>
+                      <li><a tabindex="-1" href="/terms_and_privacy">Terms & Privacy</a></li>
+                      <li><a tabindex="-1" href="/about_us">About Us</a></li>
+                    </ul>
+                  </li> -->
+                  <li><%= link_to(destroy_user_session_path, method: :delete) do %>
+                    <span class="glyphicon glyphicon-log-in"></span>
+                    LogOut
+                    <%end%> 
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+          <% else %>
+            <%- if controller_name != 'registrations' %>
+              <li>
+                <%= link_to "Sign up", new_user_registration_path %>
+              </li>
+            <% end -%>
+            <%- if controller_name != 'sessions' %>
+              <li>
+                <%= link_to(new_user_session_path) do  %>
                   <span class="glyphicon glyphicon-log-in"></span>
-                  LogOut
-                  <%end%> 
-                </li>
-              </ul>
-            </div>
-          </li>
+                  Login
+                <%end%> 
+              </li>
+            <% end -%>
+          <% end %>
+        </ul>
 
-        <% else %>
-          <%- if controller_name != 'registrations' %>
-            <li>
-              <%= link_to "Sign up", new_user_registration_path %>
-            </li>
-          <% end -%>
-          <%- if controller_name != 'sessions' %>
-            <li>
-              <%= link_to(new_user_session_path) do  %>
-                <span class="glyphicon glyphicon-log-in"></span>
-                Login
-              <%end%> 
-            </li>
-          <% end -%>
-        <% end %>
-      </ul>
-
-    </div>
-  </nav>
+      </div>
+    </nav>
     <div class="container">
       <%= bootstrap_flash %>
+      <% unless current_page?(root_path) %>
+        <a href="<%=request.referer.present? ? request.referer : '/'%>" class="back_button"> <span class="glyphicon glyphicon-arrow-left"></span> Back</a>  
+      <%end%>
       <%= yield %>
     </div>
     <div class="modal fade" id="displayGroupImage" role="dialog"></div>  

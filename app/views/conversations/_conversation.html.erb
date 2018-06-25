@@ -45,7 +45,7 @@
           <%end%>
         </div>
         <ul>
-          <%= render 'conversations/conversation_content', messages: conversation.messages.order("created_at"), user: user %>
+          <%= render 'conversations/conversation_content', messages: conversation.messages, user: user %>
         </ul>
       </div>
       <%if current_user.is_blocked_by(recipient.id) %>

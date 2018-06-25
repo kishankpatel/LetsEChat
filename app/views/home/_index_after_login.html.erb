@@ -2,46 +2,59 @@
   <div class="col-md-3">
     <div class="panel panel-primary">
       <div class="panel-heading">
-        <h3 class="panel-title">User list</h3>
+        <h3 class="panel-title">My Contacts</h3>
       </div>
       <div class="panel-body">
-        <ul>
-          <% @users.each do |user| %>
-            <li>
-              <%if user.is_blocked_by(current_user.id)%>
-                <img src="/assets/profile_icon.png" class='pf_img1'>
-              <%else%>
-                <img src=<%= user.images.present? && user.images.last.image.url.present? ? user.images.order("id").last.image.url(:thumb) : "/assets/profile_icon.png"%> class='pf_img1 user_img' data-id = <%=user.id%>  >
-              <%end%>
-              <%= link_to user.email, "/conversations/#{encode_id(user.id)}" %>
-            </li>
-          <% end %>
-        </ul>
+        <% if @chats.present? %>
+          <%@chats.each do |conversation|%>
+              <ul>
+                <%if conversation.class.name == "Conversation"%>
+                  <% user = conversation.opposed_user(current_user)%>
+                  <li>
+                    <div class="pf_cntr">
+                      <%if user.is_blocked_by(current_user.id)%>
+                        <img src="/assets/profile_icon.png" class='pf_img1'>
+                      <%else%>
+                        <img src=<%= user.images.present? && user.images.last.image.url.present? ? user.images.order("id").last.image.url(:thumb) : "/assets/profile_icon.png"%> class='pf_img1 user_img' data-id = <%=user.id%>  >
+                      <%end%>
+                    </div>
+                    <div class="chat_info_cntr">
+                      <%= link_to user.email, "/conversations/#{encode_id(user.id)}" %>
+                      <p>
+                        <%if conversation.messages.last.user_id == current_user.id%>
+                          <span class="glyphicon glyphicon-arrow-right"></span>
+                        <%end%>
+                        <%=conversation.messages.last.body.truncate(20)%>
+                      </p>
+                    </div>
+                  </li>
+                <%else%>
+                  <%group = conversation %>
+                  <li>
+                    <div class="pf_cntr">
+                      <img src=<%= group.images.present? && group.images.last.image.url.present? ? group.images.order("id").last.image.url(:thumb) : "/assets/group_icon.png"%> class='pf_img1 group_img' data-id = <%=group.id%> >
+                    </div>
+                    <div class="chat_info_cntr">
+                      <%= link_to "/groups/#{encode_group_id(group.id)}" do %>
+                        <span><%=group.name%></span>
+                      <%end%>
+                      <p>
+                        <%if group.group_messages.last.user_id == current_user.id%>
+                          <span class="glyphicon glyphicon-arrow-right"></span>
+                        <%end%>
+                        <%=group.group_messages.last.body.truncate(20)%>
+                      </p>
+                    </div>
+                  </li>
+                <%end%>
+              </ul>
+          <%end%>
+        <%end%>
       </div>
     </div>
-    <% if @groups.present? %>  
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">Groups</h3>
-        </div>
-        <div class="panel-body">
-          <ul>
-            <% @groups.each do |group| %>
-              <li>
-                <img src=<%= group.images.present? && group.images.last.image.url.present? ? group.images.order("id").last.image.url(:thumb) : "/assets/group_icon.png"%> class='pf_img1 group_img' data-id = <%=group.id%> >
-                <%= link_to "/groups/#{encode_group_id(group.id)}" do %>
-                  <span><%=group.name%></span>
-                <%end%>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-    <%end%>
   </div>
   <div class="clearfix"></div>
 </div>
-
 
 <div class="modal fade" id="displayUserImage" role="dialog"></div>  
 <script type="text/javascript">
