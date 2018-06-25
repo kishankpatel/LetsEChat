@@ -20,12 +20,14 @@
                     </div>
                     <div class="chat_info_cntr">
                       <%= link_to user.email, "/conversations/#{encode_id(user.id)}" %>
-                      <p>
-                        <%if conversation.messages.last.user_id == current_user.id%>
-                          <span class="glyphicon glyphicon-arrow-right"></span>
-                        <%end%>
-                        <%=conversation.messages.last.body.truncate(20)%>
-                      </p>
+                      <%if conversation.messages.present?%>
+                        <p>
+                          <%if conversation.messages.last.user_id == current_user.id%>
+                            <span class="glyphicon glyphicon-arrow-right"></span>
+                          <%end%>
+                          <%=conversation.messages.last.body.truncate(20)%>
+                        </p>
+                      <%end%>
                     </div>
                   </li>
                 <%else%>
@@ -38,12 +40,14 @@
                       <%= link_to "/groups/#{encode_group_id(group.id)}" do %>
                         <span><%=group.name%></span>
                       <%end%>
-                      <p>
-                        <%if group.group_messages.last.user_id == current_user.id%>
-                          <span class="glyphicon glyphicon-arrow-right"></span>
-                        <%end%>
-                        <%=group.group_messages.last.body.truncate(20)%>
-                      </p>
+                      <%if group.group_messages.present?%>
+                        <p>
+                          <%if group.group_messages.last.user_id == current_user.id%>
+                            <span class="glyphicon glyphicon-arrow-right"></span>
+                          <%end%>
+                          <%=group.group_messages.last.body.truncate(20)%>
+                        </p>
+                      <%end%>
                     </div>
                   </li>
                 <%end%>
