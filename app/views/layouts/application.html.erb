@@ -15,7 +15,7 @@
   </head>
   <body>
     <div class="notify_btn_sec"></div>
-    <nav class="navbar navbar-inverse ">
+    <nav class="navbar navbar-inverse header_fixed">
       <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand" href="/" style="padding-top: 10px;"><img src="/assets/logo.png" height="35px" style="display: inline-block;margin-right: 5px;"><span>Let's E-Chat</span></a>
@@ -35,13 +35,13 @@
               </div>
             </li>
             <li>
-              <div class="dropdown">
-                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+              <div class="dropdown header_menu_sec">
+                <a href="javascript:void(0)" class="dropdown-toggle header_menu_btn" data-toggle="dropdown">
                   <!-- <img src="/assets/profile_icon.png" alt="Profile" class="profile-img"> -->
                   <img src=<%= current_user.images.present? && current_user.images.last.image.url.present? ? current_user.images.order("id").last.image.url(:thumb) : "/assets/profile_icon.png"%> class='profile-img' data-id = <%=current_user.id%>  >
                   
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu header_menu">
                   <li><a href="javascript:void(0)"><%= current_user.email %></a></li>
                   <li><a href="javascript:void(0)" class="search_user_btn">Search User</a></li>
                   <li><a href="/users/profile">My Profile</a></li>
@@ -85,7 +85,7 @@
 
       </div>
     </nav>
-    <div class="container">
+    <div class="container main_cntr">
       <%= bootstrap_flash %>
       <% unless current_page?(root_path) %>
         <a href="<%=request.referer.present? ? request.referer : '/'%>" class="back_button"> <span class="glyphicon glyphicon-arrow-left"></span> Back</a>  
@@ -191,7 +191,7 @@
 
   // Display search field after clicking on sear user option from header.
   $(".search_user_btn").click(function(){
-    $(".scarch_user_sec").toggle("slow");
+    $(".scarch_user_sec").toggle(100);
     $(".scarch_user_sec").find("#search_user").focus();
   })
 

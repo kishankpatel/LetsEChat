@@ -1,61 +1,59 @@
-<div class="row">
-  <div class="col-md-3">
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title">My Contacts</h3>
-      </div>
-      <div class="panel-body">
-        <% if @chats.present? %>
-          <%@chats.each do |conversation|%>
-              <ul>
-                <%if conversation.class.name == "Conversation"%>
-                  <% user = conversation.opposed_user(current_user)%>
-                  <li>
-                    <div class="pf_cntr">
-                      <%if user.is_blocked_by(current_user.id)%>
-                        <img src="/assets/profile_icon.png" class='pf_img1'>
-                      <%else%>
-                        <img src=<%= user.images.present? && user.images.last.image.url.present? ? user.images.order("id").last.image.url(:thumb) : "/assets/profile_icon.png"%> class='pf_img1 user_img' data-id = <%=user.id%>  >
-                      <%end%>
-                    </div>
-                    <div class="chat_info_cntr">
-                      <%= link_to user.email, "/conversations/#{encode_id(user.id)}" %>
-                      <%if conversation.messages.present?%>
-                        <p>
-                          <%if conversation.messages.last.user_id == current_user.id%>
-                            <span class="glyphicon glyphicon-arrow-right"></span>
-                          <%end%>
-                          <%=conversation.messages.last.body.truncate(20)%>
-                        </p>
-                      <%end%>
-                    </div>
-                  </li>
-                <%else%>
-                  <%group = conversation %>
-                  <li>
-                    <div class="pf_cntr">
-                      <img src=<%= group.images.present? && group.images.last.image.url.present? ? group.images.order("id").last.image.url(:thumb) : "/assets/group_icon.png"%> class='pf_img1 group_img' data-id = <%=group.id%> >
-                    </div>
-                    <div class="chat_info_cntr">
-                      <%= link_to "/groups/#{encode_group_id(group.id)}" do %>
-                        <span><%=group.name%></span>
-                      <%end%>
-                      <%if group.group_messages.present?%>
-                        <p>
-                          <%if group.group_messages.last.user_id == current_user.id%>
-                            <span class="glyphicon glyphicon-arrow-right"></span>
-                          <%end%>
-                          <%=group.group_messages.last.body.truncate(20)%>
-                        </p>
-                      <%end%>
-                    </div>
-                  </li>
-                <%end%>
-              </ul>
+<div class="chats_list_sec">
+  <div class="chat_list_heading">
+    <h3 class="chat_list_title">Chats</h3>
+  </div>
+  <div class="chats_list col-md-12 col-sm-12 col-xs-12">
+      <div class="chat_list_body">
+        <ul>
+          <% if @chats.present? %>
+            <%@chats.each do |conversation|%>
+              <%if conversation.class.name == "Conversation"%>
+                <% user = conversation.opposed_user(current_user)%>
+                <li>
+                  <div class="pf_cntr">
+                    <%if user.is_blocked_by(current_user.id)%>
+                      <img src="/assets/profile_icon.png" class='pf_img1'>
+                    <%else%>
+                      <img src=<%= user.images.present? && user.images.last.image.url.present? ? user.images.order("id").last.image.url(:thumb) : "/assets/profile_icon.png"%> class='pf_img1 user_img' data-id = <%=user.id%>  >
+                    <%end%>
+                  </div>
+                  <div class="chat_info_cntr">
+                    <%= link_to user.email, "/conversations/#{encode_id(user.id)}" %>
+                    <%if conversation.messages.present?%>
+                      <p>
+                        <%if conversation.messages.last.user_id == current_user.id%>
+                          <span class="glyphicon glyphicon-arrow-right"></span>
+                        <%end%>
+                        <%=content_with_emoji(conversation.messages.last.body.truncate(20))%>
+                      </p>
+                    <%end%>
+                  </div>
+                </li>
+              <%else%>
+                <%group = conversation %>
+                <li>
+                  <div class="pf_cntr">
+                    <img src=<%= group.images.present? && group.images.last.image.url.present? ? group.images.order("id").last.image.url(:thumb) : "/assets/group_icon.png"%> class='pf_img1 group_img' data-id = <%=group.id%> >
+                  </div>
+                  <div class="chat_info_cntr">
+                    <%= link_to "/groups/#{encode_group_id(group.id)}" do %>
+                      <span><%=group.name%></span>
+                    <%end%>
+                    <%if group.group_messages.present?%>
+                      <p>
+                        <%if group.group_messages.last.user_id == current_user.id%>
+                          <span class="glyphicon glyphicon-arrow-right"></span>
+                        <%end%>
+                        <%=content_with_emoji(group.group_messages.last.body.truncate(20))%>
+                      </p>
+                    <%end%>
+                  </div>
+                </li>
+              <%end%>
+            <%end%>
           <%end%>
-        <%end%>
+        </ul>
       </div>
-    </div>
   </div>
   <div class="clearfix"></div>
 </div>
