@@ -365,7 +365,7 @@ a.back_button {
     padding: 0;
 }
 .chats_list .chat_list_body ul{margin: 0;}
-.chats_list .chat_list_body ul li{margin:0;padding:5px 10px;}
+.chats_list .chat_list_body ul li{margin:0;padding:5px 10px;border-bottom: 1px solid #eee;}
 .chats_list.col-md-12{
   padding:0;
 } 
@@ -379,6 +379,19 @@ a.back_button {
   z-index: 999;
 }
 .main_cntr{margin-top:60px;}
+.modal-content {
+    border-radius: 0;
+}
+.modal-header .close {
+    outline: none;
+}
+.modal-header .close:hover {
+    color: red;
+}
+textarea{resize:none;}
+.form-group span.input-group-addon,.form-group .form-control,input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="button"].btn-block {
+    border-radius: 0;
+}
 @media only screen and (max-width: 768px) {
   .container.main_cntr{padding:0 5px;}
   ul.dropdown-menu li:not(:last-child) a {
